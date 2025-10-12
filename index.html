@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hassen Mokdad — Portfolio</title>
+    <meta name="description" content="Développeur web et graphiste à Paris — sites performants, design et technologie.">
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+</head>
+<body class="dark-mode">
+    <header class="site-header" data-aos="fade-down">
+        <div class="container header-inner">
+            <div class="brand-left">
+                <img src="images/logo-hm-new.png" alt="HM" class="logo-hm">
+                
+            </div>
+            <p class="tagline">Développeur web et graphiste à Paris, je conçois des sites performants et élégants alliant design et technologie.</p>
+            <div class="controls">
+                <button id="theme-toggle" aria-label="Basculer le thème">🌓</button>
+                <button id="burger" aria-label="Ouvrir le menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <nav id="main-nav" class="main-nav">
+        <ul>
+            <li><a href="#about">À propos</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#graphisme">Graphisme</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="about" class="container" data-aos="fade-up">
+            <h2>À propos</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Développeur web basé à Paris, spécialisé en HTML, CSS, JavaScript et WordPress. J’aime construire des interfaces claires et performantes tout en valorisant le design graphique.</p>
+                    <a class="btn" href="#portfolio">Découvrir mes projets</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="container" data-aos="fade-up">
+            <h2>Services</h2>
+            <ul class="services-list">
+                <li>Développement de sites vitrines</li>
+                <li>Création de boutiques e‑commerce</li>
+                <li>Optimisation SEO & performance</li>
+                <li>Direction artistique & identité visuelle</li>
+            </ul>
+        </section>
+
+        <section id="portfolio" class="container" data-aos="fade-up">
+            <h2>Mes Réalisations</h2>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="*">Tous</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="graphisme">Graphisme</button>
+                <button class="filter-btn" data-filter="motion">Motion</button>
+            </div>
+
+            <div class="portfolio-grid" id="projects">
+                <article class="project-card" data-category="web">
+                    <img src="images/aufildeleau.png" alt="Au Fil de l'Eau" loading="lazy">
+                    <h3>Au Fil de l’Eau – Technique</h3>
+                    <p>Site responsive WordPress avec le thème Avada.</p>
+                    <a href="https://aufildeleau.eu/" target="_blank" rel="noopener">Voir le projet</a>
+                </article>
+                <article class="project-card" data-category="web">
+                    <img src="images/aufildeleau.png" alt="Au Fil de l'Eau (association)" loading="lazy">
+                    <h3>Au Fil de l’Eau – Projet associatif</h3>
+                    <p>Site vitrine pour une association œuvrant pour la préservation du patrimoine aquatique.</p>
+                    <a href="https://aufildeleau.eu/" target="_blank" rel="noopener">Voir le site</a>
+                </article>
+                <article class="project-card" data-category="motion">
+                    <img src="images/motion.png" alt="Motion Design" loading="lazy">
+                    <h3>Motion Design</h3>
+                    <p>Animation vidéo avec After Effects pour événements.</p>
+                    <a href="#" target="_blank" rel="noopener">Voir le projet</a>
+                </article>
+                <article class="project-card" data-category="graphisme">
+                    <img src="images/book.png" alt="Book graphique" loading="lazy">
+                    <h3>Book Graphique</h3>
+                    <p>Logos, chartes graphiques, retouches photo.</p>
+                    <a href="#" target="_blank" rel="noopener">Voir le projet</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="graphisme" class="container" data-aos="fade-up">
+            <h2>Mes Créations Graphiques</h2>
+            <div class="gallery-grid">
+                <img src="images/LOGO_LOCCITANE.png" alt="Logo L'Occitane" loading="lazy">
+                <img src="images/cinema4d.png" alt="Modèle 3D Cinema4D" loading="lazy">
+                <img src="images/diamant.png" alt="Design Diamant 3D" loading="lazy">
+                <img src="images/StreetArt .jpg" alt="Street Art (Design)" loading="lazy">
+                <img src="images/album.jpg" alt="Couverture d'Album" loading="lazy">
+                <img src="images/StreetArt.jpg" alt="Street Art (Photo)" loading="lazy">
+                <img src="images/placeholder_graphisme.png" alt="Projet Graphique (Placeholder)" loading="lazy">
+            </div>
+        </section>
+
+        <section id="contact" class="container" data-aos="fade-up">
+            <h2>Contact</h2>
+            <form id="contact-form" novalidate>
+                <div class="form-row">
+                    <input type="text" name="name" placeholder="Votre nom" required>
+                    <input type="email" name="email" placeholder="Votre email" required>
+                </div>
+                <textarea name="message" placeholder="Votre message" required></textarea>
+                <div class="form-row actions">
+                    <button type="submit" class="btn">Envoyer</button>
+                    <div id="form-status" role="status" aria-live="polite"></div>
+                </div>
+            </form>
+            <p>Tu peux me joindre à <a href="mailto:mokdadhassen@yahoo.fr">mokdadhassen@yahoo.fr</a></p>
+            <div class="social-links">
+                <a href="#" target="_blank" rel="noopener">LinkedIn</a> ·
+                <a href="#" target="_blank" rel="noopener">GitHub</a> ·
+                <a href="#" target="_blank" rel="noopener">Behance</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Fait avec ❤️ par Hassen — 2025</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="main.js"></script>
+    <script>AOS.init({ duration: 800, once: true });</script>
+</body>
+</html>
