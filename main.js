@@ -1,88 +1,119 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-    // --- Gestion du Thème (Dark/Light Mode) ---
-    const body = document.body;
-    const toggle = document.getElementById('theme-toggle');
-    const saved = localStorage.getItem('theme');
+document.addEventListener('DOMContentLoaded', function () {
+  // --- Thème ---
+  const body = document.body;
+  const toggle = document.getElementById('theme-toggle');
+  const saved = localStorage.getItem('theme');
 
-    // Applique le thème sauvegardé, ou le mode sombre par défaut
-    if (saved === 'light') {
-        body.classList.remove('dark-mode');
-        body.classList.add('light-mode');
-    } else {
-        body.classList.add('dark-mode');
-    }
+  if (saved === 'light') {
+    body.classList.remove('dark-mode');
+    body.classList.add('light-mode');
+    if (toggle) toggle.setAttribute('aria-pressed', 'true');
+  } else {
+    body.classList.add('dark-mode');
+    if (toggle) toggle.setAttribute('aria-pressed', 'false');
+  }
 
-    if (toggle) {
-        toggle.addEventListener('click', () => {
-            body.classList.toggle('light-mode');
-            body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
-        });
-    }
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      const light = body.classList.toggle('light-mode');
+      body.classList.toggle('dark-mode', !light);
+      localStorage.setItem('theme', light ? 'light' : 'dark');
+      toggle.setAttribute('aria-pressed', String(light));
+    });
+  }
 
-    // --- Menu Burger ---
-    const burger = document.getElementById('burger');
-    const nav = document.getElementById('main-nav');
-    if (burger) {
-        burger.addEventListener('click', () => nav.classList.toggle('open'));
-    }
+  // --- Menu burger (null-safe partout) ---
+  const burger = document.getElementById('burger');
+  const nav = document.getElementById('main-nav');
 
-    // --- Filtre de Projets ---
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projects = document.querySelectorAll('.project-card');
+  function closeNav() {
+    if (!nav || !burger) return;
+    nav.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+  function openNav() {
+    if (!nav || !burger) return;
+    nav.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+  }
+
+  if (burger && nav) {
+    burger.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    nav.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t && t.matches && t.matches('a')) closeNav();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!nav || !burger) return;
+      const target = e.target;
+      if (target !== burger && !(nav.contains && nav.contains(target))) closeNav();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  // --- Filtres portfolio ---
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projects = document.querySelectorAll('.project-card');
+  if (filterBtns.length && projects.length) {
     filterBtns.forEach(btn => btn.addEventListener('click', () => {
-        // Active le bouton cliqué
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
 
-        const f = btn.dataset.filter;
-
-        // Filtre les projets (ce code devrait maintenant fonctionner)
-        projects.forEach(p => {
-            const isVisible = f === '*' || p.dataset.category === f;
-            p.style.display = isVisible ? '' : 'none';
-        });
+      const f = btn.dataset.filter;
+      projects.forEach(p => {
+        const isVisible = f === '*' || p.dataset.category === f;
+        p.style.display = isVisible ? '' : 'none';
+      });
     }));
+  }
 
-    // --- Gestion du Formulaire de Contact (EmailJS) ---
-    // Cette section a été unifiée pour éviter la double soumission et les erreurs.
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
+  // --- Formulaire (EmailJS optionnel + honeypot + messages) ---
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const honey = document.querySelector('input.honeypot');
 
-    if (form && typeof emailjs !== 'undefined') {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            const fd = new FormData(form);
+  function flash(msg, color) {
+    if (!status) return;
+    status.textContent = msg;
+    status.style.color = color || 'inherit';
+    setTimeout(() => { if (status.textContent === msg) status.textContent = ''; }, 6000);
+  }
 
-            // 1. Validation locale des champs requis
-            if (!fd.get('name') || !fd.get('email') || !fd.get('message')) {
-                status.textContent = 'Merci de remplir tous les champs.';
-                status.style.color = 'tomato';
-                setTimeout(() => { status.textContent = ""; }, 5000);
-                return;
-            }
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
 
-            // Affiche l'état d'envoi
-            status.textContent = 'Envoi en cours...';
-            status.style.color = 'orange';
+      if (honey && honey.value.trim() !== '') return; // bot probable
 
-            // 2. Envoi via EmailJS (Utilisez vos clés EmailJS)
-            emailjs.sendForm("service_nkgb4gz", "template_8ji7se4", this, "WbzOTI6oQfjkK_62D")
-                .then(() => {
-                    status.innerText = "✅ Message envoyé avec succès !";
-                    status.style.color = "green";
-                    form.reset();
-                    setTimeout(() => { status.innerText = ""; }, 5000);
-                })
-                .catch((error) => {
-                    console.error("Erreur EmailJS:", error);
-                    status.innerText = "❌ Erreur lors de l’envoi. Veuillez réessayer ou contacter directement.";
-                    status.style.color = "red";
-                    setTimeout(() => { status.innerText = ""; }, 8000);
-                });
-        });
-    } else if (form) {
-        // Message si EmailJS n'est pas chargé (vérifiez l'inclusion dans l'HTML)
-        console.warn("EmailJS n'est pas chargé. Le formulaire de contact ne fonctionnera pas.");
-    }
+      const fd = new FormData(form);
+      const name = (fd.get('name') || '').toString().trim();
+      const email = (fd.get('email') || '').toString().trim();
+      const message = (fd.get('message') || '').toString().trim();
+
+      if (!name || !email || !message) {
+        flash('Merci de remplir tous les champs.', 'tomato');
+        return;
+      }
+
+      if (typeof emailjs === 'undefined') {
+        console.warn("EmailJS n'est pas chargé.");
+        flash("EmailJS indisponible. Écrivez-moi : mokdadhassen@yahoo.fr", 'orange');
+        return;
+      }
+
+      flash('Envoi en cours...', 'orange');
+
+      emailjs.sendForm("service_nkgb4gz", "template_8ji7se4", this, "WbzOTI6oQfjkK_62D")
+        .then(() => { flash("✅ Message envoyé avec succès !", 'green'); form.reset(); })
+        .catch((error) => { console.error("Erreur EmailJS:", error); flash("❌ Erreur d’envoi. Réessayez ou contactez-moi directement.", 'red'); });
+    });
+  }
 });
