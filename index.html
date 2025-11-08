@@ -38,7 +38,7 @@
         }
     </script>
 </head>
-<body class="dark-mode">
+<body>
     <a class="skip-link" href="#main">Aller au contenu</a>
 
     <header class="site-header" data-aos="fade-down">
@@ -59,19 +59,21 @@
                 Développeur web et graphiste à Paris, je conçois des sites performants et élégants alliant design et technologie.
             </p>
 
-           
+            <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#graphisme">Graphisme</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="controls">
+                <button id="burger" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false" title="Menu">☰</button>
+            </div>
+            
         </div>
     </header>
-
-
-    <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
-        <ul>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#graphisme">Graphisme</a></li>
-            <li><a href="#contact">Contact</a></li>
-            </ul>
-    </nav>
 
     <main id="main">
         <section id="hero-aprilford">
@@ -183,4 +185,3 @@
     <script>AOS.init({ duration: 800, once: true });</script>
 </body>
 </html>
-
