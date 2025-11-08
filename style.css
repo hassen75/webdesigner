@@ -172,10 +172,13 @@ section {
     width: auto
 }
 
+/* CORRECTION DU LOGO : Augmentation de la taille */
 .logo-hm {
-    width: 55px;
-    height: 55px;
-    display: block
+    width: 75px !important; 
+    height: 75px !important; 
+    display: block;
+    object-fit: contain; 
+    padding: 5px; 
 }
 
 .controls {
@@ -541,15 +544,35 @@ button {
 footer {
     background-color: var(--color-light-background); 
     color: var(--color-text-dark); 
-    text-align: center;
     padding: 2.5rem 1rem; 
     font-size: .95rem; 
     border-top: 1px solid #e5e5e5; 
 }
 
-footer p {
-    margin-top: 1rem;
+/* Structure interne du footer */
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-copyright {
+    margin: 0;
     opacity: 0.8;
+    order: 2;
+}
+
+.footer-email {
+    margin: 0;
+    order: 1;
+}
+
+footer p {
+    margin: 0; /* Suppression des marges du p général */
+    text-align: center;
 }
 
 /* ===========================
@@ -663,5 +686,22 @@ footer p {
     
     .main-nav.open {
         display: block;
+    }
+
+    /* Footer Responsive */
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .footer-email, .footer-copyright {
+        text-align: center;
+        width: 100%;
+        order: initial; 
+    }
+    .footer-copyright {
+        order: 2; 
+    }
+    .footer-email {
+        order: 1; 
     }
 }
