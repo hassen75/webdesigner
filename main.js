@@ -1,27 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // --- Thème ---
-  const body = document.body;
-  const toggle = document.getElementById('theme-toggle');
-  const saved = localStorage.getItem('theme');
-
-  if (saved === 'light') {
-    body.classList.remove('dark-mode');
-    body.classList.add('light-mode');
-    if (toggle) toggle.setAttribute('aria-pressed', 'true');
-  } else {
-    body.classList.add('dark-mode');
-    if (toggle) toggle.setAttribute('aria-pressed', 'false');
-  }
-
-  if (toggle) {
-    toggle.addEventListener('click', () => {
-      const light = body.classList.toggle('light-mode');
-      body.classList.toggle('dark-mode', !light);
-      localStorage.setItem('theme', light ? 'light' : 'dark');
-      toggle.setAttribute('aria-pressed', String(light));
-    });
-  }
-
+  
   // --- Menu burger (null-safe partout) ---
   const burger = document.getElementById('burger');
   const nav = document.getElementById('main-nav');
@@ -43,17 +21,20 @@ document.addEventListener('DOMContentLoaded', function () {
       burger.setAttribute('aria-expanded', String(isOpen));
     });
 
+    // Fermer la nav quand on clique sur un lien
     nav.addEventListener('click', (e) => {
       const t = e.target;
       if (t && t.matches && t.matches('a')) closeNav();
     });
 
+    // Fermer la nav quand on clique en dehors
     document.addEventListener('click', (e) => {
       if (!nav || !burger) return;
       const target = e.target;
       if (target !== burger && !(nav.contains && nav.contains(target))) closeNav();
     });
 
+    // Fermer la nav avec la touche Échap
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeNav();
     });
@@ -111,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       flash('Envoi en cours...', 'orange');
 
+      // ⚠️ ASSUREZ-VOUS QUE CES CLÉS SONT CORRECTES (SERVICE ID, TEMPLATE ID, PUBLIC KEY)
       emailjs.sendForm("service_nkgb4gz", "template_8ji7se4", this, "WbzOTI6oQfjkK_62D")
         .then(() => { flash("✅ Message envoyé avec succès !", 'green'); form.reset(); })
         .catch((error) => { console.error("Erreur EmailJS:", error); flash("❌ Erreur d’envoi. Réessayez ou contactez-moi directement.", 'red'); });
