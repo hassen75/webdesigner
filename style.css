@@ -173,14 +173,16 @@ section {
 }
 
 /* CORRECTION DU LOGO : Augmentation de la taille */
+/* CORRECTION DU LOGO : Augmentation de la taille */
 .logo-hm {
-    width: 75px !important; 
-    height: 75px !important; 
+    /* Augmentation de la taille à 90px */
+    width: 90px !important; 
+    height: 90px !important; 
+    
     display: block;
     object-fit: contain; 
     padding: 5px; 
 }
-
 .controls {
     display: flex;
     gap: 10px
@@ -705,3 +707,4 @@ footer p {
         order: 1; 
     }
 }
+
