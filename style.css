@@ -172,16 +172,26 @@ section {
     width: auto
 }
 
-/* CORRECTION DU LOGO : Augmentation de la taille */
-/* CORRECTION DU LOGO : Augmentation de la taille */
+
+/* CORRECTION DU LOGO : Augmentation de la taille sans pousser la nav */
 .logo-hm {
-    /* Augmentation de la taille à 90px */
-    width: 90px !important; 
-    height: 90px !important; 
-    
+    width: 100px !important; /* On l'agrandit encore plus */
+    height: 100px !important; /* Et la hauteur */
     display: block;
-    object-fit: contain; 
-    padding: 5px; 
+    object-fit: contain; /* S'assure que le contenu du logo (HM) ne soit pas déformé */
+    padding: 0; /* Supprime le padding qui ajoutait de l'espace blanc */
+}
+
+.brand-left {
+    display: flex;
+    align-items: center;
+    width: auto;
+    
+    /* Retire le fond blanc du conteneur pour ne pas avoir de cadre */
+    background-color: transparent !important; 
+    
+    /* Ajoute un padding au conteneur lui-même si le logo dépasse un peu */
+    padding: 5px 0; 
 }
 .controls {
     display: flex;
@@ -707,4 +717,5 @@ footer p {
         order: 1; 
     }
 }
+
 
