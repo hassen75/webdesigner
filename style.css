@@ -225,7 +225,7 @@ main h2::after {
 }
 
 section {
-    padding: 4rem 0; /* Augmenté le padding pour plus d'espace */
+    padding: 4rem 0;
 }
 
 /* ===========================
@@ -574,7 +574,7 @@ button {
     margin: 0 auto 2rem;
     display: flex;
     flex-direction: column;
-    background-color: var(--color-text-light); /* Fond blanc pour le formulaire */
+    background-color: var(--color-text-light); 
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
@@ -589,6 +589,135 @@ button {
 #contact-form input, #contact-form textarea {
     flex-grow: 1;
     padding: .75rem;
-    border: 1px solid #ddd; /* Plus clair que votre ancien #555 */
+    border: 1px solid #ddd; 
     border-radius: 5px;
     background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    font-family: var(--font-body)
+}
+
+/* Styles de focus AprilFord */
+#contact-form input:focus, #contact-form textarea:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+#contact-form textarea {
+    height: 150px;
+    resize: vertical
+}
+
+#form-status {
+    padding: .5rem;
+    text-align: center;
+    font-weight: 600
+}
+
+.social-links {
+    text-align: center;
+    font-size: 1.1rem
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem 0;
+    font-size: .9rem;
+    border-top: 1px solid #333
+}
+
+/* ===========================
+   Responsive (Correction Finale)
+   =========================== */
+@media (min-width:768px) {
+    #burger {
+        display: none
+    }
+
+    /* Rétablir le header en mode sticky pour les sections après le Hero */
+    .site-header {
+        position: sticky !important; /* Reviens à sticky pour le reste du site */
+        background-color: #f4f4f9; 
+    }
+    
+    .header-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between
+    }
+
+    .brand-left {
+        margin-right: 2rem
+    }
+
+    .tagline {
+        flex-basis: auto;
+        margin: 0 2rem;
+        font-size: 1rem;
+        text-align: left;
+        display: block !important; 
+    }
+
+    .main-nav {
+        position: static;
+        display: block;
+        width: auto;
+        height: auto;
+        padding-top: 0
+    }
+
+        .main-nav ul {
+            display: flex;
+            gap: 1rem
+        }
+
+        .main-nav li a {
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px
+        }
+
+    .about-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        position: relative !important; 
+        background: var(--color-dark) !important; 
+        padding-top: 1rem;
+    }
+    
+    .site-header .logo-hm {
+        filter: none !important; 
+    }
+    
+    #hero-aprilford {
+        min-height: 50vh; 
+    }
+    
+    .title-hero {
+        font-size: 40px;
+    }
+    
+    #burger {
+        display: block;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .header-inner {
+        flex-wrap: wrap;
+    }
+
+    .tagline {
+        display: none; 
+    }
+    
+    .main-nav.open {
+        display: block;
+    }
+}
