@@ -144,28 +144,33 @@ section {
     transition: background-color .3s;
 }
 
-/* Force les éléments du header à être blancs sur le Hero */
-#hero-aprilford .site-header .header-inner * {
+/* NOUVEAU: Style pour le logo en texte */
+.text-logo {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: 20px;
+    text-decoration: none;
+}
+/* Rendre le logo texte blanc sur le Hero */
+#hero-aprilford .site-header .text-logo {
     color: var(--color-text-light) !important;
 }
-
-/* Force le logo à être blanc sur le Hero */
-#hero-aprilford .logo-hm {
-    filter: brightness(0) invert(1) !important; 
+/* Rendre le logo texte sombre sur le reste du site (sticky header) */
+.site-header .text-logo {
+    color: var(--color-text-dark) !important;
 }
 
-/* Masquer la tagline */
+
+/* Les règles du logo image sont maintenant inutiles (.logo-hm, .brand-left img) */
 .tagline {
     display: none; 
 }
 
 .header-inner {
     display: flex;
-    /* NOUVEAU: Centrer la nav */
-    justify-content: space-between; 
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    /* Hauteur minimale pour soutenir le logo */
     min-height: 80px; 
 }
 
@@ -173,25 +178,26 @@ section {
     display: flex;
     align-items: center;
     width: auto;
-    /* NOUVEAU: Pousser le logo à gauche sur desktop */
-    margin-right: 2rem; 
-    padding: 5px 0; 
-}
-
-/* CORRECTION DU LOGO : Taille agrandie à 100px */
-.logo-hm {
-    width: 100px !important; 
-    height: 100px !important; 
-    display: block;
-    object-fit: contain; 
-    padding: 0; 
+    margin-right: 2rem;
 }
 
 .controls {
     display: flex;
     gap: 10px;
-    /* NOUVEAU: Pousser les controls à droite (seulement visible sur mobile) */
+    /* NOUVEAU: Pousser les controls à droite (pour le bouton Contactez-moi) */
     margin-left: auto;
+}
+
+/* BOUTON CONTACTEZ-MOI DANS LE HEADER */
+.contact-header-btn {
+    padding: 8px 15px !important; 
+    font-size: 14px !important;
+    /* Style du bouton blanc sur le Hero */
+    background-color: var(--color-text-light) !important;
+    color: var(--color-text-dark) !important;
+    background-image: none !important; /* Supprime le dégradé de la classe .btn */
+    box-shadow: none !important;
+    font-weight: var(--font-weight-semibold) !important;
 }
 
 #theme-toggle, #burger {
@@ -219,7 +225,6 @@ section {
     z-index: 999;
     padding-top: 60px;
     text-align: center;
-    /* Le fond du menu burger doit être sombre */
     background: rgba(0,0,0,.9); 
     backdrop-filter: blur(3px)
 }
@@ -239,13 +244,13 @@ section {
         padding: 1rem;
         font-size: 1.5rem;
         text-decoration: none;
-        color: var(--color-text-light); /* Texte blanc dans le menu burger */
+        color: var(--color-text-light); 
         transition: background-color .2s
     }
 
         .main-nav li a:hover {
             background-color: var(--color-secondary-pink);
-            color: var(--color-text-dark); /* Texte sombre sur fond rose au survol */
+            color: var(--color-text-dark); 
         }
 
 /* ===========================
@@ -588,18 +593,19 @@ footer p {
    =========================== */
 @media (min-width:768px) {
     #burger {
-        display: none
-    }
-
-    /* NOUVEAU: Centrer la nav sur desktop */
-    .header-inner {
-        flex-wrap: nowrap;
-        /* NOUVEAU: Centrer les éléments */
-        justify-content: center;
-        gap: 3rem; 
-        min-height: 80px; 
+        display: none !important; /* Masquer le burger sur desktop */
     }
     
+    /* Le logo image (s'il était présent) est masqué, le logo texte prend le relais */
+    .logo-hm {
+        display: none;
+    }
+    
+    /* Afficher le logo texte sur desktop */
+    .text-logo {
+        display: block !important;
+    }
+
     /* Rétablir le header en mode sticky pour les sections après le Hero */
     .site-header {
         position: sticky !important; 
@@ -608,30 +614,26 @@ footer p {
         border-bottom: 1px solid #ddd;
     }
 
-    /* Logo à gauche */
-    .brand-left {
-        /* Pousser le logo à l'extrême gauche */
-        margin-right: auto; 
-    }
-
-    /* Le logo et les liens redeviennent sombres sur le fond clair du header */
-    .site-header .logo-hm {
-        filter: none !important;
-    }
-    
+    /* Les liens redeviennent sombres sur le fond clair du header */
     .site-header .header-inner * {
         color: var(--color-text-dark) !important;
     }
     
-    .tagline {
-        flex-basis: auto;
-        margin: 0 2rem;
-        font-size: 1rem;
-        text-align: left;
-        display: block !important; 
+    .header-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between; /* Utiliser space-between pour séparer logo/nav/bouton */
     }
 
-    /* Styles pour la navigation desktop centrée */
+    .brand-left {
+        /* Pousser la nav à droite du logo */
+        margin-right: 20px; 
+    }
+
+    .tagline {
+        display: none !important; 
+    }
+
+    /* Styles pour la navigation desktop (centrée entre logo et bouton) */
     .main-nav {
         position: static;
         display: block !important; 
@@ -639,9 +641,9 @@ footer p {
         height: auto;
         padding-top: 0;
         background: transparent !important;
-        /* Laisser les marges gérées par le justify-content: center du parent */
-        margin-left: 0; 
+        /* Laisser l'espace être géré par margin-right: auto */
         margin-right: auto;
+        margin-left: 0; 
     }
 
         .main-nav ul {
@@ -662,6 +664,14 @@ footer p {
 }
 
 @media (max-width: 768px) {
+    /* Masquer le logo texte sur mobile pour laisser la place au logo image */
+    .text-logo {
+        display: none !important;
+    }
+    .logo-hm { /* Si le logo image est toujours dans le HTML, il sera visible ici */
+        display: block !important;
+    }
+    
     .site-header {
         position: relative !important; 
         background: var(--color-text-dark) !important; 
