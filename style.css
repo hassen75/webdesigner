@@ -134,15 +134,17 @@ section {
    Header & Navigation (Adaptation Hero)
    =========================== */
 .site-header {
-    /* Styles FLOTTANTS: BLEU JUSQU'EN HAUT */
-    position: absolute !important; 
+    /* CORRECTION FINALE: Header en relative pour que le Hero commence en dessous */
+    position: relative !important; 
     top: 0 !important;
     width: 100% !important;
     z-index: 1000 !important;
-    background: transparent !important; 
+    
+    /* Fond blanc (light-background) pour séparer visuellement le Hero */
+    background: var(--color-light-background) !important; 
     padding: 1rem 0 !important;
     transition: background-color .3s;
-    border-bottom: none !important; 
+    border-bottom: 1px solid #ddd; /* Ligne de séparation visible */
 }
 
 /* NOUVEAU: Style pour le logo en texte */
@@ -151,8 +153,8 @@ section {
     font-weight: var(--font-weight-bold);
     font-size: 20px;
     text-decoration: none;
-    /* Couleur de base blanche pour flotter sur le Hero */
-    color: var(--color-text-light) !important; 
+    /* Le logo est sombre par défaut (sur fond blanc) */
+    color: var(--color-text-dark) !important; 
 }
 
 /* Le logo image est masqué pour l'usage du logo texte */
@@ -190,9 +192,8 @@ section {
 .contact-header-btn {
     padding: 8px 15px !important; 
     font-size: 14px !important;
-    /* Style du bouton blanc */
     background-color: var(--color-text-light) !important;
-    color: var(--color-text-dark) !important; /* Texte noir sur bouton blanc */
+    color: var(--color-text-dark) !important;
     background-image: none !important; 
     box-shadow: none !important;
     font-weight: var(--font-weight-semibold) !important;
@@ -605,7 +606,7 @@ footer p {
     }
 
     /* ********** CORRECTION MAJEURE ICI : HEADER STICKY ET OPACITÉ ********** */
-    /* Le Header redevient sticky et opaque pour s'assurer que le dégradé ne monte pas en haut */
+    /* Pour les sections en dessous du Hero, le Header redevient opaque et sticky */
     .site-header {
         position: sticky !important; 
         top: 0 !important;
@@ -618,12 +619,21 @@ footer p {
         border-bottom: 1px solid #ddd; /* Ajoute la bordure en mode sticky */
     }
     
-    /* Supprimer les couleurs blanches forcées du Header pour les éléments sticky */
+    /* Le Header redevient transparent et le texte blanc S'IL EST EN ABSOLU SUR LE HERO */
+    .site-header:not([style*="position: sticky"]) {
+        position: absolute !important;
+        background: transparent !important;
+        border-bottom: none !important;
+    }
+    .site-header:not([style*="position: sticky"]) * {
+        color: var(--color-text-light) !important;
+    }
+
+    /* Les liens redeviennent sombres sur le fond clair du header */
     .site-header .header-inner * {
         color: var(--color-text-dark) !important;
     }
-    /* FIN DE LA CORRECTION MAJEURE */
-
+    
     .header-inner {
         flex-wrap: nowrap;
         justify-content: space-between; /* Utiliser space-between pour séparer logo/nav/bouton */
@@ -645,8 +655,7 @@ footer p {
         height: auto;
         padding-top: 0;
         background: transparent !important;
-        /* NOUVEAU: Centrage de la nav */
-        margin-right: auto; 
+        margin-right: auto; /* Pousser la nav vers le centre/droite */
         margin-left: 0; 
     }
 
