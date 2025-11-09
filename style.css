@@ -134,7 +134,7 @@ section {
    Header & Navigation (Adaptation Hero)
    =========================== */
 .site-header {
-    /* Styles FLOTTANTS pour le Hero */
+    /* Styles FLOTTANTS au-dessus du Hero (position absolue sur la page) */
     position: absolute !important; 
     top: 0 !important;
     width: 100% !important;
@@ -151,17 +151,12 @@ section {
     font-size: 20px;
     text-decoration: none;
 }
-/* Rendre le logo texte blanc sur le Hero */
-#hero-aprilford .site-header .text-logo {
+/* Force les éléments du header à être blancs sur le Hero */
+#hero-aprilford .site-header .header-inner * {
     color: var(--color-text-light) !important;
 }
-/* Rendre le logo texte sombre sur le reste du site (sticky header) */
-.site-header .text-logo {
-    color: var(--color-text-dark) !important;
-}
 
-
-/* Les règles du logo image sont maintenant inutiles (.logo-hm, .brand-left img) */
+/* Masquer la tagline */
 .tagline {
     display: none; 
 }
@@ -181,23 +176,19 @@ section {
     margin-right: 2rem;
 }
 
+/* Le Logo Image (s'il existe) */
+.logo-hm {
+    width: 100px !important; 
+    height: 100px !important; 
+    display: block;
+    object-fit: contain; 
+    padding: 0; 
+}
+
 .controls {
     display: flex;
     gap: 10px;
-    /* NOUVEAU: Pousser les controls à droite (pour le bouton Contactez-moi) */
     margin-left: auto;
-}
-
-/* BOUTON CONTACTEZ-MOI DANS LE HEADER */
-.contact-header-btn {
-    padding: 8px 15px !important; 
-    font-size: 14px !important;
-    /* Style du bouton blanc sur le Hero */
-    background-color: var(--color-text-light) !important;
-    color: var(--color-text-dark) !important;
-    background-image: none !important; /* Supprime le dégradé de la classe .btn */
-    box-shadow: none !important;
-    font-weight: var(--font-weight-semibold) !important;
 }
 
 #theme-toggle, #burger {
@@ -214,6 +205,17 @@ section {
     #theme-toggle:hover, #burger:hover {
         background: rgba(127,127,127,.12)
     }
+
+/* BOUTON CONTACTEZ-MOI DANS LE HEADER */
+.contact-header-btn {
+    padding: 8px 15px !important; 
+    font-size: 14px !important;
+    background-color: var(--color-text-light) !important;
+    color: var(--color-text-dark) !important;
+    background-image: none !important; 
+    box-shadow: none !important;
+    font-weight: var(--font-weight-semibold) !important;
+}
 
 .main-nav {
     display: none;
@@ -595,10 +597,10 @@ footer p {
     #burger {
         display: none !important; /* Masquer le burger sur desktop */
     }
-    
+
     /* Le logo image (s'il était présent) est masqué, le logo texte prend le relais */
     .logo-hm {
-        display: none;
+        display: none !important;
     }
     
     /* Afficher le logo texte sur desktop */
@@ -606,26 +608,36 @@ footer p {
         display: block !important;
     }
 
-    /* Rétablir le header en mode sticky pour les sections après le Hero */
+    /* ********** CORRECTION MAJEURE ICI : HEADER STICKY ET OPACITÉ ********** */
+    /* Le Header redevient sticky et opaque pour s'assurer que le dégradé ne monte pas en haut */
     .site-header {
         position: sticky !important; 
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        
+        /* Rend le fond blanc/opaque, créant la coupure visuelle */
         background-color: #fff !important; 
         color: var(--color-text-dark) !important;
         border-bottom: 1px solid #ddd;
     }
-
-    /* Les liens redeviennent sombres sur le fond clair du header */
+    
+    /* Supprimer les couleurs blanches forcées du Header pour les éléments sticky */
     .site-header .header-inner * {
         color: var(--color-text-dark) !important;
     }
-    
+    /* S'assurer que le logo texte ne soit pas blanc sur le sticky header */
+    #hero-aprilford .site-header .text-logo {
+        color: var(--color-text-dark) !important; 
+    }
+    /* FIN DE LA CORRECTION MAJEURE */
+
     .header-inner {
         flex-wrap: nowrap;
         justify-content: space-between; /* Utiliser space-between pour séparer logo/nav/bouton */
     }
 
     .brand-left {
-        /* Pousser la nav à droite du logo */
         margin-right: 20px; 
     }
 
@@ -633,7 +645,7 @@ footer p {
         display: none !important; 
     }
 
-    /* Styles pour la navigation desktop (centrée entre logo et bouton) */
+    /* Styles pour la navigation desktop */
     .main-nav {
         position: static;
         display: block !important; 
@@ -641,8 +653,7 @@ footer p {
         height: auto;
         padding-top: 0;
         background: transparent !important;
-        /* Laisser l'espace être géré par margin-right: auto */
-        margin-right: auto;
+        margin-right: auto; /* Pousser la nav vers le centre/droite */
         margin-left: 0; 
     }
 
@@ -669,17 +680,13 @@ footer p {
         display: none !important;
     }
     .logo-hm { /* Si le logo image est toujours dans le HTML, il sera visible ici */
-        display: block !important;
+        filter: brightness(0) invert(1) !important; 
     }
     
     .site-header {
         position: relative !important; 
         background: var(--color-text-dark) !important; 
         padding-top: 1rem;
-    }
-    
-    .site-header .logo-hm {
-        filter: brightness(0) invert(1) !important; 
     }
     
     .site-header .header-inner * {
