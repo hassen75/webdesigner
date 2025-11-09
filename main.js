@@ -1,123 +1,765 @@
-document.addEventListener('DOMContentLoaded', function () {
-  
-  // --- Sticky Header Logic (Ajoute/retire la classe 'on-hero') ---
-  const header = document.querySelector('.site-header');
-  const heroSection = document.getElementById('hero-aprilford');
+/* ===========================
+   Variables & Reset de base
+   =========================== */
+:root {
+    /* --- COULEURS APRILFORD (HÉRO ET ACCENTS) --- */
+    --color-primary-blue: #007bff; 
+    --color-secondary-pink: #ff007b; 
+    --color-gradient-start: #4A00E0; 
+    --color-gradient-end: #FF007B; 
+    
+    /* --- COULEURS THÈME CLAIR SIMPLIFIÉ --- */
+    --color-dark: #121212; 
+    --color-light-background: #f4f4f9; 
+    --color-text-dark: #333333; 
+    --color-text-light: #ffffff; 
+    --color-accent: #ffb700; 
+    --color-primary: #1e88e5; 
+    --color-secondary: #0077b6; 
 
-  function checkHeaderPosition() {
-    if (header && heroSection) {
-      // Calcule si le haut du Hero est toujours visible
-      // On utilise le scrollY (position verticale de défilement)
-      if (window.scrollY < heroSection.offsetHeight - header.offsetHeight) {
-        header.classList.add('on-hero');
-      } else {
-        header.classList.remove('on-hero');
-      }
+    /* Typographie */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600; 
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800; 
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+html {
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    line-height: 1.6;
+    background-color: var(--color-light-background);
+    color: var(--color-text-dark);
+}
+
+/* Accessibilité utilitaires */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden
+}
+
+    .skip-link:focus {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: .5rem 1rem;
+        background: var(--color-accent);
+        color: var(--color-text-dark);
     }
-  }
 
-  // Ajoute la classe 'on-hero' au chargement (pour l'affichage initial)
-  if (header) {
-      window.requestAnimationFrame(checkHeaderPosition);
-      window.addEventListener('scroll', checkHeaderPosition);
-  }
+.sr-only {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px,1px,1px,1px);
+    white-space: nowrap
+}
 
-  // --- Menu burger (null-safe partout) ---
-  const burger = document.getElementById('burger');
-  const nav = document.getElementById('main-nav');
+.honeypot {
+    position: absolute;
+    left: -9999px
+}
 
-  function closeNav() {
-    if (!nav || !burger) return;
-    nav.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-  function openNav() {
-    if (!nav || !burger) return;
-    nav.classList.add('open');
-    burger.setAttribute('aria-expanded', 'true');
-  }
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important
+    }
+}
 
-  if (burger && nav) {
-    burger.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('open');
-      burger.setAttribute('aria-expanded', String(isOpen));
-    });
+/* ===========================
+   Layout & Typo
+   =========================== */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-top: 0
+}
 
-    // Fermer la nav quand on clique sur un lien
-    nav.addEventListener('click', (e) => {
-      const t = e.target;
-      if (t && t.matches && t.matches('a')) closeNav();
-    });
+/* Styles H2 généraux (utilisés par Services, Portfolio, etc.) - APRILFORD TITLES */
+h2 {
+    font-size: 36px;
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-extra-bold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 0; 
+    position: relative;
+}
 
-    // Fermer la nav quand on clique en dehors
-    document.addEventListener('click', (e) => {
-      if (!nav || !burger) return;
-      const target = e.target;
-      if (target !== burger && !(nav.contains && nav.contains(target))) closeNav();
-    });
+/* Soulignement dégradé sous les titres H2 */
+main h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-image: linear-gradient(to right, var(--color-secondary-pink), var(--color-primary-blue));
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
 
-    // Fermer la nav avec la touche Échap
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeNav();
-    });
-  }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem
+}
 
-  // --- Filtres portfolio ---
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const projects = document.querySelectorAll('.project-card');
-  if (filterBtns.length && projects.length) {
-    filterBtns.forEach(btn => btn.addEventListener('click', () => {
-      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
-      btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+section {
+    padding: 4rem 0;
+}
 
-      const f = btn.dataset.filter;
-      projects.forEach(p => {
-        const isVisible = f === '*' || p.dataset.category === f;
-        p.style.display = isVisible ? '' : 'none';
-      });
-    }));
-  }
+/* ===========================
+   Header & Navigation (Adaptation Hero)
+   =========================== */
+.site-header {
+    /* CORRECTION FINALE: Header par défaut (état Sticky) */
+    position: sticky !important; 
+    top: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+    
+    /* Fond blanc/opaque (état Sticky) */
+    background: var(--color-light-background) !important; 
+    padding: 1rem 0 !important;
+    transition: background-color .3s;
+    border-bottom: 1px solid #ddd; 
+}
 
-  // --- Formulaire (EmailJS optionnel + honeypot + messages) ---
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-  const honey = document.querySelector('input.honeypot');
+/* NOUVEAU: Style pour le logo en texte */
+.text-logo {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    font-size: 20px;
+    text-decoration: none;
+    /* Couleur par défaut: Sombre (pour l'état sticky) */
+    color: var(--color-text-dark) !important; 
+}
 
-  function flash(msg, color) {
-    if (!status) return;
-    status.textContent = msg;
-    status.style.color = color || 'inherit';
-    setTimeout(() => { if (status.textContent === msg) status.textContent = ''; }, 6000);
-  }
+/* ⚠️ RÈGLE DE TRANSITION JAVASCRIPT: Header quand il est sur le Hero (Transparent/Blanc) */
+.site-header.on-hero {
+    position: absolute !important; 
+    background: transparent !important; 
+    border-bottom: none !important; 
+}
 
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+.site-header.on-hero .text-logo,
+.site-header.on-hero .main-nav li a,
+.site-header.on-hero .contact-header-btn {
+    color: var(--color-text-light) !important; /* TEXTE BLANC */
+}
 
-      if (honey && honey.value.trim() !== '') return; // bot probable
+/* Le logo image est masqué pour l'usage du logo texte */
+.logo-hm {
+    display: none !important;
+}
 
-      const fd = new FormData(form);
-      const name = (fd.get('name') || '').toString().trim();
-      const email = (fd.get('email') || '').toString().trim();
-      const message = (fd.get('message') || '').toString().trim();
+/* Masquer la tagline */
+.tagline {
+    display: none; 
+}
 
-      if (!name || !email || !message) {
-        flash('Merci de remplir tous les champs.', 'tomato');
-        return;
-      }
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 80px; 
+}
 
-      if (typeof emailjs === 'undefined') {
-        console.warn("EmailJS n'est pas chargé.");
-        flash("EmailJS indisponible. Écrivez-moi : mokdadhassen@yahoo.fr", 'orange');
-        return;
-      }
+.brand-left {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin-right: 2rem;
+}
 
-      flash('Envoi en cours...', 'orange');
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+}
 
-      // ⚠️ ASSUREZ-VOUS QUE CES CLÉS SONT CORRECTES (SERVICE ID, TEMPLATE ID, PUBLIC KEY)
-      emailjs.sendForm("service_nkgb4gz", "template_8ji7se4", this, "WbzOTI6oQfjkK_62D")
-        .then(() => { flash("✅ Message envoyé avec succès !", 'green'); form.reset(); })
-        .catch((error) => { console.error("Erreur EmailJS:", error); flash("❌ Erreur d’envoi. Réessayez ou contactez-moi directement.", 'red'); });
-    });
-  }
-});
+/* BOUTON CONTACTEZ-MOI DANS LE HEADER */
+.contact-header-btn {
+    padding: 8px 15px !important; 
+    font-size: 14px !important;
+    /* Style du bouton blanc (reste blanc sur le fond transparent du Hero et sur le fond blanc du Sticky Header) */
+    background-color: var(--color-text-light) !important;
+    color: var(--color-text-dark) !important; /* Texte noir sur bouton blanc */
+    background-image: none !important; 
+    box-shadow: none !important;
+    font-weight: var(--font-weight-semibold) !important;
+}
+
+#theme-toggle, #burger {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color .2s
+}
+
+    #theme-toggle:hover, #burger:hover {
+        background: rgba(127,127,127,.12)
+    }
+
+.main-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    padding-top: 60px;
+    text-align: center;
+    background: rgba(0,0,0,.9); 
+    backdrop-filter: blur(3px)
+}
+
+    .main-nav.open {
+        display: block;
+    }
+
+    .main-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0
+    }
+
+    .main-nav li a {
+        display: block;
+        padding: 1rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+        color: var(--color-text-light); 
+        transition: background-color .2s
+    }
+
+        .main-nav li a:hover {
+            background-color: var(--color-secondary-pink);
+            color: var(--color-text-dark); 
+        }
+
+/* ===========================
+   SECTION HERO APRILFORD
+   =========================== */
+#hero-aprilford {
+    position: relative;
+    min-height: 80vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-light);
+    padding: 100px 20px 50px;
+    overflow: hidden;
+    /* Dégradé principal */
+    background: linear-gradient(135deg, var(--color-gradient-start) 0%, #8E2DE2 50%, var(--color-gradient-end) 100%);
+    z-index: 5;
+}
+
+/* Le flou abstrait (style AprilFord) */
+#hero-aprilford::after {
+    content: '';
+    position: absolute;
+    top: -20%; left: -10%;
+    width: 120%; height: 120%;
+    background: radial-gradient(circle at 20% 80%, rgba(0,255,255,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,0,255,0.4) 0%, transparent 50%);
+    filter: blur(150px);
+    z-index: 6; 
+    mix-blend-mode: overlay;
+}
+
+.hero-content-inner {
+    position: relative;
+    z-index: 7; 
+}
+
+.title-hero {
+    font-size: clamp(3rem, 8vw, 60px); 
+    font-family: var(--font-heading); 
+    font-weight: var(--font-weight-extra-bold);
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-text-light);
+}
+
+.subtitle-hero {
+    font-size: 18px;
+    font-weight: var(--font-weight-regular); 
+    line-height: 1.5;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+/* Bouton du Hero (bouton blanc) */
+.btn-hero {
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.btn-hero:hover {
+    background-color: var(--color-secondary-pink);
+    color: var(--color-text-light);
+    transform: translateY(-3px);
+}
+
+/* ===========================
+   Boutons génériques (Mise à jour pour AprilFord)
+   =========================== */
+button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd; 
+    background: transparent;
+    color: inherit;
+    cursor: pointer
+}
+
+    button:hover {
+        background: rgba(127,127,127,.05);
+    }
+
+/* Bouton secondaire dégradé (.btn) */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 1rem;
+    background-image: linear-gradient(to right, var(--color-primary-blue), var(--color-secondary-pink));
+    color: var(--color-text-light) !important;
+    text-decoration: none;
+    border-radius: 50px; 
+    font-weight: var(--font-weight-bold);
+    transition: opacity .2s, transform .2s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 0 rgba(0,0,0,.12);
+}
+
+    .btn:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+    }
+    .btn:active {
+        transform: translateY(1px);
+    }
+
+/* ===========================
+   Sections (Mise à jour pour AprilFord)
+   =========================== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center
+}
+
+/* --- SERVICES LIST (votre .services-list) --- */
+.services-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; 
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.services-list li {
+    background-color: var(--color-text-light);
+    padding: 30px 20px;
+    border-radius: 8px;
+    font-weight: var(--font-weight-semibold);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border-top: 4px solid var(--color-primary-blue); 
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services-list li:hover {
+    border-top-color: var(--color-secondary-pink);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Filtres */
+.filters {
+    text-align: center;
+    margin-bottom: 2rem
+}
+
+.filter-btn {
+    /* Style de bouton light mode/classique */
+    background-color: #eee;
+    color: var(--color-text-dark);
+    border: 1px solid #ccc
+}
+
+.filter-btn.active {
+    background-color: var(--color-primary-blue);
+    color: var(--color-text-light);
+}
+
+/* Portfolio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 1.5rem;
+    align-items: stretch
+}
+
+/* --- CARTES PROJET (votre .project-card) --- */
+.project-card {
+    background-color: var(--color-text-light);
+    border-radius: 8px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    .project-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 1rem
+    }
+
+    .project-card h3 {
+        font-size: 1.25rem;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .project-card a {
+        margin-top: auto;
+        display: inline-block
+    }
+
+/* Galerie Graphisme */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 1rem;
+    justify-content: center
+}
+
+    .gallery-grid img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform .3s
+    }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05)
+        }
+
+/* Formulaire */
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-text-light); 
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem
+}
+
+#contact-form input, #contact-form textarea {
+    flex-grow: 1;
+    padding: .75rem;
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    font-family: var(--font-body)
+}
+
+/* Styles de focus AprilFord */
+#contact-form input:focus, #contact-form textarea:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+#contact-form textarea {
+    height: 150px;
+    resize: vertical
+}
+
+#form-status {
+    padding: .5rem;
+    text-align: center;
+    font-weight: 600
+}
+
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 1.1rem
+}
+
+.social-links a {
+    color: var(--color-primary-blue);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+}
+
+.social-links a:hover {
+    color: var(--color-secondary-pink);
+    text-decoration: underline;
+}
+
+/* Footer (Light Mode / AprilFord) */
+footer {
+    background-color: var(--color-light-background); 
+    color: var(--color-text-dark); 
+    padding: 2.5rem 1rem; 
+    font-size: .95rem; 
+    border-top: 1px solid #e5e5e5; 
+}
+
+/* Structure interne du footer */
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-copyright {
+    margin: 0;
+    opacity: 0.8;
+    order: 2;
+}
+
+.footer-email {
+    margin: 0;
+    order: 1;
+}
+
+footer p {
+    margin: 0; 
+    text-align: center;
+}
+
+/* ===========================
+   Responsive (Final)
+   =========================== */
+@media (min-width:768px) {
+    #burger {
+        display: none !important; /* Masquer le burger sur desktop */
+    }
+
+    /* Le logo image est masqué pour l'usage du logo texte */
+    .logo-hm {
+        display: none !important;
+    }
+    
+    /* Afficher le logo texte sur desktop */
+    .text-logo {
+        display: block !important;
+    }
+
+    /* ********** CORRECTION MAJEURE ICI : HEADER STICKY ET OPACITÉ ********** */
+    /* Le Header est positionné en sticky par défaut, mais avec une correction pour le Hero */
+    .site-header {
+        position: sticky !important; 
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        
+        /* Fond blanc/opaque (état Sticky) */
+        background-color: var(--color-light-background) !important; 
+        color: var(--color-text-dark) !important;
+        border-bottom: 1px solid #ddd; /* Ajoute la bordure en mode sticky */
+    }
+    
+    /* Les éléments du Header (texte, liens) redeviennent sombres sur le fond clair du sticky header */
+    .site-header .header-inner * {
+        color: var(--color-text-dark) !important;
+    }
+    
+    /* ⚠️ RÈGLE JAVASCRIPT: Quand la classe on-hero est présente (en haut de page) */
+    .site-header.on-hero {
+        position: absolute !important; /* Décroche le header du flux */
+        background: transparent !important; /* Devient transparent */
+        border-bottom: none !important; /* Pas de bordure sur le Hero */
+    }
+    
+    .site-header.on-hero .text-logo,
+    .site-header.on-hero .main-nav li a,
+    .site-header.on-hero .contact-header-btn {
+        color: var(--color-text-light) !important; /* TEXTE BLANC sur le Hero transparent */
+    }
+    
+    /* Le bouton 'Contactez-moi' doit rester blanc avec texte sombre, même sur le Hero */
+    .site-header.on-hero .contact-header-btn {
+        background-color: var(--color-text-light) !important; 
+        color: var(--color-text-dark) !important; 
+    }
+
+    .header-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between; 
+    }
+
+    .brand-left {
+        margin-right: 20px; 
+    }
+
+    .tagline {
+        display: none !important; 
+    }
+
+    /* Styles pour la navigation desktop */
+    .main-nav {
+        position: static;
+        display: block !important; 
+        width: auto;
+        height: auto;
+        padding-top: 0;
+        background: transparent !important;
+        margin-right: auto; 
+        margin-left: 0; 
+    }
+
+        .main-nav ul {
+            display: flex;
+            gap: 1rem
+        }
+
+        .main-nav li a {
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            color: var(--color-text-dark) !important;
+        }
+
+    .about-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+@media (max-width: 768px) {
+    /* Masquer le logo texte sur mobile pour laisser la place au logo image */
+    .text-logo {
+        display: none !important;
+    }
+    .logo-hm { /* Si le logo image est toujours dans le HTML, il sera visible ici */
+        filter: brightness(0) invert(1) !important; 
+    }
+    
+    .site-header {
+        position: relative !important; 
+        background: var(--color-text-dark) !important; 
+        padding-top: 1rem;
+    }
+    
+    .site-header .header-inner * {
+        color: var(--color-text-light) !important;
+    }
+    
+    #hero-aprilford {
+        min-height: 50vh; 
+    }
+    
+    .title-hero {
+        font-size: 40px;
+    }
+    
+    #burger {
+        display: block;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+    
+    .header-inner {
+        flex-wrap: wrap;
+    }
+
+    .tagline {
+        display: none; 
+    }
+    
+    .main-nav.open {
+        display: block;
+    }
+
+    /* Footer Responsive */
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .footer-email, .footer-copyright {
+        text-align: center;
+        width: 100%;
+        order: initial; 
+    }
+    .footer-copyright {
+        order: 2; 
+    }
+    .footer-email {
+        order: 1; 
+    }
+}
