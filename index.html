@@ -24,6 +24,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+    <script src="main.js"></script>
+
 
     <script type="application/ld+json">
         {
@@ -41,31 +43,29 @@
 <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <header class="site-header" data-aos="fade-down">
-        <div class="container header-inner">
-            <div class="brand-left">
-                <a href="#main" class="text-logo">Hassen Mokdad</a>
-            </div>
+   <header class="site-header">
+  <div class="container header-inner">
+    <div class="brand-left">
+      <a href="#" class="text-logo">Hassen Mokdad</a>
+      <img src="logo.png" alt="Logo" class="logo-hm">
+    </div>
 
-            <p class="tagline">
-                Développeur web et graphiste à Paris, je conçois des sites performants et élégants alliant design et technologie.
-            </p>
+    <div class="controls">
+      <button id="theme-toggle" aria-label="Changer le thème">🌓</button>
+      <button id="burger" aria-label="Ouvrir le menu">☰</button>
+      <a href="#contact" class="contact-header-btn">Contactez-moi</a>
+    </div>
+  </div>
 
-            <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
-                <ul>
-                    <li><a href="#about">À Propos</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    </ul>
-            </nav>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-            <div class="controls">
-                <a href="#contact" class="btn contact-header-btn">Contactez-moi</a>
-                <button id="burger" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false" title="Menu">☰</button>
-            </div>
-            
-        </div>
-    </header>
 
     <main id="main">
         <section id="hero-aprilford">
@@ -192,3 +192,4 @@
     <script>AOS.init({ duration: 800, once: true });</script>
 </body>
 </html>
+
