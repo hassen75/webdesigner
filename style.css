@@ -2,13 +2,11 @@
    Variables & Reset de base
    =========================== */
 :root {
-  /* --- COULEURS APRILFORD (HÉRO ET ACCENTS) --- */
   --color-primary-blue: #007bff;
   --color-secondary-pink: #ff007b;
   --color-gradient-start: #4A00E0;
   --color-gradient-end: #FF007B;
 
-  /* --- COULEURS THÈME CLAIR SIMPLIFIÉ --- */
   --color-dark: #121212;
   --color-light-background: #f4f4f9;
   --color-text-dark: #333333;
@@ -17,7 +15,6 @@
   --color-primary: #1e88e5;
   --color-secondary: #0077b6;
 
-  /* Typographie */
   --font-heading: 'Poppins', sans-serif;
   --font-body: 'Montserrat', sans-serif;
   --font-weight-light: 300;
@@ -27,99 +24,39 @@
   --font-weight-extra-bold: 800;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html {
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  font-family: var(--font-body);
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
 body {
-  margin: 0;
-  font-family: var(--font-body);
-  line-height: 1.6;
   background-color: var(--color-light-background);
   color: var(--color-text-dark);
-}
-
-/* Accessibilité utilitaires */
-.skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
-.skip-link:focus { position: static; width: auto; height: auto; padding: .5rem 1rem; background: var(--color-accent); color: var(--color-text-dark); }
-
-.sr-only { position: absolute !important; height: 1px; width: 1px; overflow: hidden; clip: rect(1px,1px,1px,1px); white-space: nowrap; }
-.honeypot { position: absolute; left: -9999px; }
-
-@media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  line-height: 1.6;
 }
 
 /* ===========================
-   Layout & Typo
+   HEADER – Style type "exemple"
    =========================== */
-h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; margin-top: 0; }
 
-h2 {
-  font-size: 36px;
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-extra-bold);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  text-align: center;
-  margin-bottom: 40px;
-  padding-top: 0;
-  position: relative;
-}
-main h2::after {
-  content: '';
-  display: block;
-  width: 60px; height: 4px;
-  background-image: linear-gradient(to right, var(--color-secondary-pink), var(--color-primary-blue));
-  margin: 15px auto 0;
-  border-radius: 2px;
-}
-
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-section { padding: 4rem 0; }
-
-/* ===========================
-   Header & Navigation
-   =========================== */
 .site-header {
-  position: sticky; top: 0; width: 100%;
+  position: sticky;
+  top: 0;
+  width: 100%;
   z-index: 1000;
-  background: var(--color-light-background);
-  padding: 12px 16px;
-  border-bottom: 1px solid #ddd;
-  display: block;
-  transition: background-color .3s, border-color .3s, color .3s;
-}
-.site-header.on-hero {
-  position: absolute;
+  transition: background-color .3s ease, border-color .3s ease, color .3s ease;
   background: transparent;
-  border-bottom-color: transparent;
-}
-.site-header.on-hero .text-logo,
-.site-header.on-hero .logo-descriptor,
-.site-header.on-hero .main-nav a {
-  color: var(--color-text-light) !important;
+  border-bottom: 1px solid transparent;
 }
 
-/* Branding */
-.text-logo {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-bold);
-  font-size: 20px;
-  text-decoration: none;
-  color: var(--color-text-dark) !important;
-  margin: 0; padding: 0; line-height: 1;
-  display: flex; align-items: center;
-}
-.logo-descriptor {
-  font-family: var(--font-heading);
-  font-weight: var(--font-weight-regular);
-  font-size: 20px;
-  margin-left: 8px;
-  color: var(--color-text-dark) !important;
-  display: flex; align-it
-
+/* Layout global : logo | nav | bouton */
+.header-inner {
+  display: grid;
+  grid-template-column
