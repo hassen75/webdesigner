@@ -746,25 +746,70 @@ footer p {
     }
 }
 
+/* ===========================
+   Responsive (Correction Mobile Finale)
+   =========================== */
 @media (max-width: 768px) {
-    /* Masquer le logo texte sur mobile pour laisser la place au logo image */
+    /* ⚠️ CORRECTION 1: LOGO TEXTE COMPLET (Hassen Mokdad) */
     .text-logo {
-        display: none !important;
-    }
-    .logo-hm { /* Si le logo image est toujours dans le HTML, il sera visible ici */
-        filter: brightness(0) invert(1) !important; 
+        display: block !important; 
+        font-size: 18px; 
+        color: var(--color-text-light) !important; 
     }
     
+    /* Masquer le descripteur "Portfolio" (qui s'affichait mal en mobile) */
+    .logo-descriptor {
+        display: none !important;
+    }
+    
+    /* Masquer le logo image */
+    .logo-hm { 
+        display: none !important;
+    }
+
+    /* ⚠️ CORRECTION 2: ALIGNEMENT ET COULEURS */
     .site-header {
         position: relative !important; 
-        background: var(--color-text-dark) !important; 
+        background: var(--color-text-dark) !important; /* Couleur sombre quand on est en haut */
         padding-top: 1rem;
     }
     
     .site-header .header-inner * {
         color: var(--color-text-light) !important;
     }
+
+    .header-inner {
+        justify-content: space-between; 
+        align-items: center;
+        flex-wrap: nowrap; /* Empêche les retours à la ligne */
+    }
     
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 10px; 
+        margin-left: 0; 
+    }
+    
+    /* Le bouton Contactez-moi reste visible et utilise le style desktop (blanc/sombre) */
+    .contact-header-btn {
+        display: block !important;
+        background-color: var(--color-text-light) !important;
+        color: var(--color-text-dark) !important;
+    }
+
+    /* S'assurer que le bouton burger est visible */
+    #burger {
+        display: block !important;
+        color: var(--color-text-light) !important;
+    }
+    
+    .main-nav {
+        /* La navigation mobile doit être masquée tant qu'on n'a pas cliqué */
+        display: none !important;
+    }
+    
+    /* Les autres styles mobile */
     #hero-aprilford {
         min-height: 50vh; 
     }
@@ -773,18 +818,6 @@ footer p {
         font-size: 40px;
     }
     
-    #burger {
-        display: block;
-    }
-    
-    .main-nav {
-        display: none;
-    }
-    
-    .header-inner {
-        flex-wrap: wrap;
-    }
-
     .tagline {
         display: none; 
     }
