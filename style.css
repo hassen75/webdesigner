@@ -707,6 +707,21 @@ footer p {
         grid-template-columns: 1fr
     }
 }
+@media (max-width: 480px) {
+  .btn-hero {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+
+  .subtitle-hero {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+}
 
 @media (max-width: 768px) {
     /* Masquer le logo texte sur mobile pour laisser la place au logo image */
@@ -772,3 +787,4 @@ footer p {
         order: 1; 
     }
 }
+
