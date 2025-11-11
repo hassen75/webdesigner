@@ -1,11 +1,7 @@
 /* ===========================
-   Variables & Reset de base (FUSIONNÉ)
+   Variables & Reset de base
    =========================== */
 :root {
-    /* --- NOUVELLES VARIABLES DE BASE ET UTILS --- */
-    --container: 1120px;
-    --pad-section: clamp(16px, 4vw, 48px);
-    
     /* --- COULEURS APRILFORD (HÉRO ET ACCENTS) --- */
     --color-primary-blue: #007bff; 
     --color-secondary-pink: #ff007b; 
@@ -40,8 +36,7 @@
 html {
     font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     scroll-behavior: smooth;
-    /* NOUVEAU: Empêche le défilement horizontal */
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 body {
@@ -50,13 +45,6 @@ body {
     line-height: 1.6;
     background-color: var(--color-light-background);
     color: var(--color-text-dark);
-}
-
-/* NOUVEAU: Base responsive pour images et vidéos */
-img, video { 
-    max-width: 100%; 
-    height: auto; 
-    display: block; 
 }
 
 /* Accessibilité utilitaires */
@@ -100,9 +88,6 @@ img, video {
     }
 }
 
-/* NOUVEAU: Casse les mots trop longs sur mobile */
-h1,h2,h3,p,li,a { overflow-wrap: anywhere; }
-
 /* ===========================
    Layout & Typo
    =========================== */
@@ -136,22 +121,21 @@ main h2::after {
     border-radius: 2px;
 }
 
-/* NOUVEAU: Conteneur fluide */
 .container {
-    width: min(100% - 2rem, var(--container));
-    margin-inline: auto;
-    max-width: 1200px; /* Conserver la taille max de 1200px */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem
 }
 
 section {
-    padding: var(--pad-section) 0; /* Utiliser la nouvelle variable de padding */
+    padding: 4rem 0;
 }
 
 /* ===========================
-   Header & Navigation
+   Header & Navigation (Adaptation Hero)
    =========================== */
 .site-header {
-    /* ÉTAT PAR DÉFAUT: Sticky, Opaque */
+    /* ÉTAT PAR DÉFAUT: Sticky, Opaque (quand le Hero n'est pas visible) */
     position: sticky !important; 
     top: 0 !important;
     width: 100% !important;
@@ -163,7 +147,7 @@ section {
     border-bottom: 1px solid #ddd; 
 }
 
-/* NOUVEAU: Style pour le logo en texte (PARTIE GRASSE) */
+/* NOUVEAU: Style pour le logo en texte */
 .text-logo {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-bold);
@@ -182,7 +166,7 @@ section {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-regular); /* Poids normal (400) */
     font-size: 20px;
-    margin-left: 8px; 
+    margin-left: 8px; /* Petite espace après le nom "Hassen Mokdad" */
     color: var(--color-text-dark) !important; 
     display: flex;
     align-items: center;
@@ -200,7 +184,7 @@ section {
 /* ⚠️ RÈGLE CRITIQUE POUR LE TEXTE BLANC DANS LE HERO */
 .site-header.on-hero .text-logo,
 .site-header.on-hero .logo-descriptor,
-.site-header.on-hero .main-nav li a {
+.site-header.on-hero .main-nav a {
     color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
 }
 
@@ -224,7 +208,7 @@ section {
 
 .brand-left {
     display: flex;
-    align-items: baseline; 
+    align-items: baseline; /* Correction: Utiliser baseline pour que les textes s'alignent parfaitement */
     width: auto;
     margin-right: 20px;
 }
@@ -246,7 +230,8 @@ section {
     font-weight: var(--font-weight-semibold) !important;
 }
 
-#theme-toggle, #burger {
+/* AJOUT Z-INDEX POUR CLIQUABILITÉ */
+#nav-toggle { 
     background: none;
     border: none;
     color: inherit;
@@ -254,10 +239,12 @@ section {
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 5px;
-    transition: background-color .2s
+    transition: background-color .2s;
+    position: relative !important; 
+    z-index: 1001 !important; 
 }
 
-    #theme-toggle:hover, #burger:hover {
+    #nav-toggle:hover {
         background: rgba(127,127,127,.05);
     }
 
@@ -279,13 +266,7 @@ section {
         display: block;
     }
 
-    .main-nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0
-    }
-
-    .main-nav li a {
+    .main-nav a { /* Cible les liens A directement (nouvelle structure HTML) */
         display: block;
         padding: 1rem;
         font-size: 1.5rem;
@@ -294,7 +275,7 @@ section {
         transition: background-color .2s
     }
 
-        .main-nav li a:hover {
+        .main-nav a:hover {
             background-color: var(--color-secondary-pink);
             color: var(--color-text-dark); 
         }
@@ -303,13 +284,14 @@ section {
    SECTION HERO APRILFORD
    =========================== */
 #hero-aprilford {
-    /* NOUVEAU: Utiliser les règles du Hero responsive */
-    min-height: 100vh; 
-    display: grid; 
-    place-items: center; 
-    padding: var(--pad-section) 0;
-    
     position: relative;
+    min-height: 80vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-light);
+    padding: 100px 20px 50px;
     overflow: hidden;
     /* Dégradé principal */
     background: linear-gradient(135deg, var(--color-gradient-start) 0%, #8E2DE2 50%, var(--color-gradient-end) 100%);
@@ -332,63 +314,52 @@ section {
 .hero-content-inner {
     position: relative;
     z-index: 7; 
-    /* Les styles de texte sont hérités du Hero parent */
 }
 
-/* NOUVEAU: Adaptation des titres Hero */
 .title-hero {
-    font-size: clamp(28px, 6vw, 64px); 
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-size: clamp(3rem, 8vw, 60px); 
     font-family: var(--font-heading); 
     font-weight: var(--font-weight-extra-bold);
-    text-transform: uppercase;
-    color: var(--color-text-light);
+    line-height: 1.1;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-text-light);
 }
 
 .subtitle-hero {
-    font-size: clamp(16px, 3.8vw, 20px); 
+    font-size: 18px;
     font-weight: var(--font-weight-regular); 
     line-height: 1.5;
-    max-width: 60ch;
+    max-width: 650px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 40px;
     opacity: 0.9;
-    color: var(--color-text-light);
 }
 
-/* Bouton du Hero (bouton blanc) - Réutilisation du style bouton */
+/* Bouton du Hero (bouton blanc) */
 .btn-hero {
-    display: inline-block;
-    padding: .9rem 1.8rem; /* Utilisation de la taille du nouveau bouton */
-    border-radius: .8rem;
-    text-decoration: none;
     background-color: var(--color-text-light);
     color: var(--color-text-dark);
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
     font-weight: var(--font-weight-bold);
     font-size: 18px;
-    transition: transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
 }
 
 .btn-hero:hover {
+    background-color: var(--color-secondary-pink);
+    color: var(--color-text-light);
     transform: translateY(-3px);
 }
 
 /* ===========================
-   Boutons génériques (Nouveau style)
+   Boutons génériques (Mise à jour pour AprilFord)
    =========================== */
-.btn, a.button{
-    display: inline-block;
-    padding: .9rem 1.1rem;
-    border-radius: .8rem;
-    text-align: center;
-    width: fit-content;
-}
-
-/* Autres boutons */
 button {
     padding: 8px 12px;
     border-radius: 8px;
@@ -402,12 +373,15 @@ button {
         background: rgba(127,127,127,.05);
     }
 
-/* Bouton secondaire dégradé (.btn) - Conserver le style AprilFord */
+/* Bouton secondaire dégradé (.btn) */
 .btn {
+    display: inline-block;
     padding: 12px 25px;
-    border-radius: 50px; 
+    margin-top: 1rem;
     background-image: linear-gradient(to right, var(--color-primary-blue), var(--color-secondary-pink));
     color: var(--color-text-light) !important;
+    text-decoration: none;
+    border-radius: 50px; 
     font-weight: var(--font-weight-bold);
     transition: opacity .2s, transform .2s;
     border: none;
@@ -422,23 +396,24 @@ button {
         transform: translateY(1px);
     }
 
-
 /* ===========================
-   Grilles et Cartes (Nouveau style)
+   Sections (Mise à jour pour AprilFord)
    =========================== */
-
-/* NOUVEAU: Grilles portfolio / créations */
-.grid, .portfolio-grid, .gallery-grid, .services-list {
+.about-grid {
     display: grid;
-    gap: clamp(12px, 3vw, 24px);
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center
 }
-.card{ border-radius: 12px; overflow: hidden; } /* Style de base pour les cartes */
 
-/* --- SERVICES LIST (Surcharge des grilles) --- */
+/* --- SERVICES LIST (votre .services-list) --- */
 .services-list {
     list-style: none;
     padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; 
+    text-align: center;
     margin-top: 2rem;
 }
 
@@ -464,8 +439,27 @@ button {
     margin-bottom: 2rem
 }
 
+.filter-btn {
+    /* Style de bouton light mode/classique */
+    background-color: #eee;
+    color: var(--color-text-dark);
+    border: 1px solid #ccc
+}
 
-/* --- CARTES PROJET --- */
+.filter-btn.active {
+    background-color: var(--color-primary-blue);
+    color: var(--color-text-light);
+}
+
+/* Portfolio */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+    gap: 1.5rem;
+    align-items: stretch
+}
+
+/* --- CARTES PROJET (votre .project-card) --- */
 .project-card {
     background-color: var(--color-text-light);
     border-radius: 8px; 
@@ -477,12 +471,47 @@ button {
     justify-content: space-between
 }
 
-/* Formulaire 100% largeur */
-form input, form textarea, form select, form button{
-    width: 100%; font: inherit; 
-    padding: .9rem 1rem; border-radius: .7rem;
-    box-sizing: border-box;
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    .project-card img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 1rem
+    }
+
+    .project-card h3 {
+        font-size: 1.25rem;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .project-card a {
+        margin-top: auto;
+        display: inline-block
+    }
+
+/* Galerie Graphisme */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 1rem;
+    justify-content: center
 }
+
+    .gallery-grid img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 5px;
+        transition: transform .3s
+    }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05)
+        }
 
 /* Formulaire */
 #contact-form {
@@ -496,6 +525,60 @@ form input, form textarea, form select, form button{
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
 }
 
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem
+}
+
+#contact-form input, #contact-form textarea {
+    flex-grow: 1;
+    padding: .75rem;
+    border: 1px solid #ddd; 
+    border-radius: 5px;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    font-family: var(--font-body)
+}
+
+/* Styles de focus AprilFord */
+#contact-form input:focus, #contact-form textarea:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+#contact-form textarea {
+    height: 150px;
+    resize: vertical
+}
+
+#form-status {
+    padding: .5rem;
+    text-align: center;
+    font-weight: 600
+}
+
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 1.1rem
+}
+
+.social-links a {
+    color: var(--color-primary-blue);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+}
+
+.social-links a:hover {
+    color: var(--color-secondary-pink);
+    text-decoration: underline;
+}
+
 /* Footer (Light Mode / AprilFord) */
 footer {
     background-color: var(--color-light-background); 
@@ -505,7 +588,7 @@ footer {
     border-top: 1px solid #e5e5e5; 
 }
 
-/* Footer Structure */
+/* Structure interne du footer */
 .footer-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -515,24 +598,173 @@ footer {
     flex-wrap: wrap;
 }
 
+.footer-copyright {
+    margin: 0;
+    opacity: 0.8;
+    order: 2;
+}
+
+.footer-email {
+    margin: 0;
+    order: 1;
+}
+
+footer p {
+    margin: 0; 
+    text-align: center;
+}
 
 /* ===========================
    Responsive (Final)
    =========================== */
-/* Petites casses (≤ 768px) */
-@media (max-width: 768px) {
-    /* AJUSTEMENTS HEADER MOBILE */
-    .text-logo {
-        font-size: 16px !important; 
+@media (min-width:768px) {
+    #nav-toggle { 
+        display: none !important; /* Masquer le burger sur desktop */
     }
-    .logo-descriptor {
-        display: none !important; /* Masquer le descripteur sur mobile */
+
+    /* Le logo image est masqué pour l'usage du logo texte */
+    .logo-hm {
+        display: none !important;
     }
     
+    /* Afficher le logo texte sur desktop */
+    .text-logo {
+        display: block !important;
+    }
+
+    /* ⚠️ ÉTAT STICKY / OPAQUE (Quand on DÉFILE) */
+    .site-header {
+        position: sticky !important; 
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        
+        background-color: var(--color-light-background) !important; 
+        border-bottom: 1px solid #ddd; 
+    }
+    
+    /* ⚠️ ÉTAT ON-HERO / TRANSPARENT (Quand en HAUT DE PAGE) */
+    .site-header.on-hero {
+        position: absolute !important; 
+        background: transparent !important; 
+        border-bottom: none !important; 
+    }
+
+    /* TEXTE BLANC DANS L'ÉTAT ON-HERO */
+    .site-header.on-hero .text-logo,
+    .site-header.on-hero .logo-descriptor,
+    .site-header.on-hero .main-nav a { 
+        color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
+    }
+    
+    /* Bouton 'Contactez-moi' reste blanc avec texte sombre, même sur le Hero */
+    .site-header.on-hero .contact-header-btn {
+        background-color: var(--color-text-light) !important; 
+        color: var(--color-text-dark) !important; 
+    }
+
+    /* Les liens redeviennent sombres sur le fond clair du header sticky */
+    .site-header .header-inner * {
+        color: var(--color-text-dark) !important;
+    }
+    
+    /* NOUVELLE RÈGLE : Style pour le descripteur "Portfolio" (PARTIE NON-GRASSE) */
+    .logo-descriptor {
+        font-family: var(--font-heading);
+        font-weight: var(--font-weight-regular); /* Poids normal (400) */
+        font-size: 20px;
+        margin-left: 8px; 
+        color: var(--color-text-dark) !important; 
+        display: flex;
+        align-items: center;
+        line-height: 1;
+    }
+
+    /* CORRECTION MARGES LOGO (text-logo) */
+    .text-logo {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+    }
+
+    .header-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between; 
+        align-items: center; /* CORRECTION VERTICALE */
+    }
+
+    .brand-left {
+        /* Correction: Utiliser baseline pour que les textes s'alignent parfaitement */
+        align-items: baseline; 
+        margin-right: 20px; 
+    }
+
+    .tagline {
+        display: none !important; 
+    }
+
+    /* Styles pour la navigation desktop (CENTRAGE) */
+    .main-nav {
+        position: static;
+        display: flex !important; 
+        width: auto;
+        height: auto;
+        padding-top: 0;
+        background: transparent !important;
+        /* Centrage de la nav dans l'espace restant */
+        margin-right: auto; 
+        margin-left: auto; 
+    }
+
+        .main-nav a { /* Cible les liens A directement (nouvelle structure HTML) */
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            color: var(--color-text-dark) !important;
+        }
+
+        /* ⚠️ CORRECTION FINALE : Lien Portfolio en non-gras */
+        .main-nav a:nth-child(3) { 
+            font-weight: var(--font-weight-regular) !important; 
+            opacity: 0.9;
+        }
+        
+        /* Assurer que les autres liens sont bien semi-gras */
+        .main-nav a:not(:nth-child(3)) {
+            font-weight: var(--font-weight-semibold) !important; 
+        }
+
+    .about-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* ===========================
+   Responsive (Correction Mobile Finale)
+   =========================== */
+@media (max-width: 768px) {
+    /* ⚠️ CORRECTION 1: LOGO TEXTE COMPLET (Hassen Mokdad) */
+    .text-logo {
+        display: block !important; 
+        font-size: 16px !important; /* Taille réduite pour mobile */
+        color: var(--color-text-light) !important; 
+    }
+    
+    /* Masquer le descripteur "Portfolio" sur mobile */
+    .logo-descriptor {
+        display: none !important;
+    }
+    
+    /* Masquer le logo image */
+    .logo-hm { 
+        display: none !important;
+    }
+
+    /* ⚠️ CORRECTION 2: ALIGNEMENT ET MASQUAGE */
     .site-header {
         position: relative !important; 
         background: var(--color-text-dark) !important; 
-        padding: 0.8rem 1rem !important; 
+        padding: 0.8rem 1rem !important; /* Padding réduit pour mobile */
     }
     
     .site-header .header-inner * {
@@ -543,14 +775,17 @@ footer {
         justify-content: space-between; 
         align-items: center;
         flex-wrap: nowrap; 
-        min-height: 50px; 
+        min-height: 50px; /* Hauteur réduite pour mobile */
     }
     
     .controls {
         display: flex;
         align-items: center;
-        gap: 8px; 
+        gap: 8px; /* Réduire l'espace entre le bouton et le burger */
         margin-left: 0; 
+        /* AJOUT DE Z-INDEX POUR SÉCURISER L'OUVERTURE DU MENU */
+        position: relative;
+        z-index: 1000;
     }
     
     /* Le bouton Contactez-moi et la navigation desktop sont masqués en mobile */
@@ -560,67 +795,33 @@ footer {
     }
 
     /* S'assurer que le bouton burger est visible */
-    #burger {
+    #nav-toggle { /* Cible le bouton burger */
         display: block !important;
         color: var(--color-text-light) !important;
         font-size: 1.3rem !important; 
         position: relative !important; 
-        z-index: 1001 !important; 
+        z-index: 1001 !important; /* Doit être au-dessus du bouton pour être cliquable */
     }
     
-    /* NAV MOBILE OVERLAY (ouverte) */
-    header .nav{ 
-        position: fixed; 
-        inset: 64px 0 0 0; /* Positionne le menu sous le header fixe */
-        translate: 0 -100%;
-        transition: translate .25s ease;
-        background: rgba(0,0,0,.9); 
-        padding: 16px;
-    }
-    header.nav-open .nav{ translate: 0 0; }
-    
-    /* BOUTONS PLEINE LARGEUR (utile pour les boutons du Hero) */
-    .btn, a.button{ width: 100%; } 
-    section{ padding: var(--pad-section) 0; }
-
-    /* Ajustements Hero Mobile */
-    .title-hero {
-        font-size: 35px !important;
-    }
-    #hero-aprilford {
-        min-height: 60vh;
-        padding: 60px 20px;
-    }
-}
-
-/* Moyennes (≥ 769px) */
-@media (min-width: 769px){
-    /* Récupérer les styles desktop du Header */
-    .site-header {
-        position: sticky;
-        background-color: var(--color-light-background);
-        border-bottom: 1px solid #ddd;
-    }
-    
-    /* Afficher le menu desktop et masquer le burger */
-    .main-nav {
-        display: block !important; 
-    }
-    #burger {
-        display: none !important;
+    /* Le reste des styles mobile */
+    .main-nav.open {
+        display: block;
     }
 
-    /* NOUVEAU: Grilles à 3 colonnes pour desktop */
-    .grid{
-        grid-template-columns: repeat(3, 1fr);
+    /* Footer Responsive */
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
     }
-    
-    /* Styles pour la navigation desktop (CENTRAGE) */
-    .main-nav {
-        margin-right: auto; 
-        margin-left: auto; 
+    .footer-email, .footer-copyright {
+        text-align: center;
+        width: 100%;
+        order: initial; 
     }
-    
-    /* NOUVEAU: Hero Desktop Layout (Pas utilisé dans votre cas, mais gardé pour la cohérence) */
-    .hero{ grid-template-columns: 1.1fr 0.9fr; gap: 40px; } 
+    .footer-copyright {
+        order: 2; 
+    }
+    .footer-email {
+        order: 1; 
+    }
 }
