@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function checkHeaderPosition() {
     if (header && heroSection) {
-      // Détermine si le défilement est en haut de la section Hero.
       if (window.scrollY < heroSection.offsetHeight - header.offsetHeight) {
         header.classList.add('on-hero');
       } else {
@@ -17,16 +16,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Active la vérification au chargement et au défilement
   if (header && heroSection) {
-      // Vérifie immédiatement au chargement (pour l'affichage initial)
       checkHeaderPosition(); 
-      // Écoute l'événement de défilement
       window.addEventListener('scroll', checkHeaderPosition);
   }
 
 
   // --- Menu burger (Finalisé et stable) ---
-  const burger = document.getElementById('nav-toggle'); // Mis à jour
-  const nav = document.getElementById('site-nav');     // Mis à jour
+  const burger = document.getElementById('nav-toggle'); // Cible l'ID du bouton
+  const nav = document.getElementById('main-nav');     // Cible l'ID de la nav
 
   if (burger && nav && header) {
     // ⚠️ Le clic sur le burger active/désactive la classe 'nav-open' sur le HEADER
