@@ -184,7 +184,7 @@ section {
 /* ⚠️ RÈGLE CRITIQUE POUR LE TEXTE BLANC DANS LE HERO */
 .site-header.on-hero .text-logo,
 .site-header.on-hero .logo-descriptor,
-.site-header.on-hero #main-nav a { 
+.site-header.on-hero .main-nav a { 
     color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
 }
 
@@ -242,16 +242,14 @@ section {
     transition: background-color .2s;
     position: relative !important; 
     z-index: 1001 !important; 
-    display: none; /* Masqué par défaut (mobile-first) */
 }
 
     #nav-toggle:hover {
         background: rgba(127,127,127,.05);
     }
 
-/* Navigation mobile (masqué par défaut) */
-#main-nav { 
-    /* Base mobile-first */
+.main-nav {
+    /* Base mobile-first (Masqué par défaut) */
     position: fixed;
     inset: 0 0 0 0; /* Prend tout l'écran */
     translate: 0 -100%; /* Déplace hors de l'écran */
@@ -260,12 +258,11 @@ section {
     padding-top: 60px;
     text-align: center;
     z-index: 999;
-    /* Règle de masquage pour mobile (utilisée car la règle desktop sera plus spécifique) */
-    display: none; 
+    display: none; /* Masqué par défaut */
 }
 
     /* Style des liens A à l'intérieur de la navigation mobile */
-    #main-nav a { 
+    .main-nav a { 
         display: block;
         padding: 1rem;
         font-size: 1.5rem;
@@ -274,13 +271,13 @@ section {
         transition: background-color .2s
     }
 
-        #main-nav a:hover {
+        .main-nav a:hover {
             background-color: var(--color-secondary-pink);
             color: var(--color-text-dark); 
         }
 
-/* Règle d'ouverture du menu mobile (Affichage) */
-.site-header.nav-open #main-nav { 
+/* Règle d'ouverture du menu mobile */
+.site-header.nav-open .main-nav { 
     translate: 0 0; /* Menu descend pour être visible */
     display: block !important; /* Afficher l'overlay */
 }
@@ -658,7 +655,7 @@ footer p {
     /* TEXTE BLANC DANS L'ÉTAT ON-HERO */
     .site-header.on-hero .text-logo,
     .site-header.on-hero .logo-descriptor,
-    .site-header.on-hero #main-nav a { 
+    .site-header.on-hero .main-nav a { 
         color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
     }
     
@@ -669,7 +666,7 @@ footer p {
     }
 
     /* Les liens redeviennent sombres sur le fond clair du header sticky */
-    .site-header #main-nav a { /* Cible plus spécifique pour les liens de la navigation */
+    .site-header .header-inner * {
         color: var(--color-text-dark) !important;
     }
     
@@ -709,7 +706,7 @@ footer p {
     }
 
     /* Styles pour la navigation desktop (CENTRAGE) */
-    #main-nav { /* Utilisation de l'ID pour forcer l'affichage de la navigation DESKTOP */
+    #main-nav { 
         position: static;
         display: flex !important; /* Afficher la nav desktop */
         width: auto;
@@ -719,34 +716,22 @@ footer p {
         margin-right: auto; 
         margin-left: auto; 
     }
-    
-    #main-nav ul { /* L'UL est nécessaire pour le alignement des LI */
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        gap: 25px; /* Espace entre les liens */
-    }
-
-    #main-nav ul li {
-        margin: 0;
-    }
 
         #main-nav a { /* Cible les liens A directement (nouvelle structure HTML) */
-            padding: .5rem 0rem; /* Padding vertical, pas de padding horizontal car géré par le gap */
+            padding: .5rem 1rem;
             font-size: 1rem;
             border-radius: 5px;
-            text-decoration: none;
+            color: var(--color-text-dark) !important;
         }
 
         /* ⚠️ CORRECTION FINALE : Lien Portfolio en non-gras */
-        #main-nav ul li:nth-child(3) a { 
+        #main-nav a:nth-child(3) { 
             font-weight: var(--font-weight-regular) !important; 
             opacity: 0.9;
         }
         
         /* Assurer que les autres liens sont bien semi-gras */
-        #main-nav ul li:not(:nth-child(3)) a {
+        #main-nav a:not(:nth-child(3)) {
             font-weight: var(--font-weight-semibold) !important; 
         }
 
@@ -801,8 +786,12 @@ footer p {
         margin-left: 0; 
     }
     
-    /* Le bouton Contactez-moi est masqué en mobile */
+    /* Le bouton Contactez-moi et la navigation desktop sont masqués en mobile */
     .contact-header-btn {
+        display: none !important; 
+    }
+    .main-nav {
+        /* Masqué par défaut. Ne s'affiche qu'avec la classe nav-open */
         display: none !important; 
     }
 
@@ -813,11 +802,10 @@ footer p {
         font-size: 1.3rem !important; 
         position: relative !important; 
         z-index: 1001 !important; 
-        background: none;
     }
     
     /* Menu Mobile Overlay Styles */
-    #main-nav {
+    .main-nav {
         position: fixed;
         inset: 0 0 0 0; 
         translate: 0 -100%; 
@@ -825,20 +813,12 @@ footer p {
         background: rgba(0,0,0,.9); 
         padding-top: 60px;
         z-index: 999;
-        display: none; /* Cache par défaut sur mobile */
     }
     
-    .site-header.nav-open #main-nav { 
+    /* La règle d'ouverture doit être forte pour contrer le display:none */
+    .site-header.nav-open .main-nav { 
         translate: 0 0; 
-        display: block !important; /* Afficher l'overlay avec la classe JS */
-    }
-    
-    #main-nav ul { /* L'UL est nécessaire pour centrer et styliser les LI */
-        display: flex;
-        flex-direction: column;
-        list-style: none;
-        padding: 0;
-        margin-top: 50px;
+        display: block !important; 
     }
 
     /* Footer Responsive */
