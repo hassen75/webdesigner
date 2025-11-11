@@ -146,7 +146,7 @@ section {
     border-bottom: 1px solid #ddd; 
 }
 
-/* NOUVEAU: Style pour le logo en texte */
+/* NOUVEAU: Style pour le logo en texte (PARTIE GRASSE) */
 .text-logo {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-bold);
@@ -207,7 +207,7 @@ section {
 
 .brand-left {
     display: flex;
-    align-items: baseline; /* CORRECTION VERTICALE */
+    align-items: baseline; /* Correction: Utiliser baseline pour que les textes s'alignent parfaitement */
     width: auto;
     margin-right: 20px;
 }
