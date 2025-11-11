@@ -41,34 +41,34 @@
 <body>
     <a class="skip-link" href="#main">Aller au contenu</a>
 
-<header class="site-header">
-  <div class="header-inner">
-    <!-- Gauche : Logo + descriptor -->
-    <div class="brand-left">
-      <a href="#top" class="text-logo">Hassen Mokdad</a>
-      <span class="logo-descriptor">Portfolio</span>
-    </div>
+    <header class="site-header" data-aos="fade-down">
+        <div class="container header-inner">
+            <div class="brand-left">
+                <a href="#main" class="text-logo">Hassen Mokdad</a>
+            </div>
 
-    <!-- Centre : Nav -->
-    <nav id="site-nav" class="main-nav" role="navigation" aria-label="Navigation principale">
-      <a href="#about">À Propos</a>
-      <a href="#services">Services</a>
-      <a href="#contact">Contact</a>
-    </nav>
+            <p class="tagline">
+                Développeur web et graphiste à Paris, je conçois des sites performants et élégants alliant design et technologie.
+            </p>
 
-    <!-- Droite : CTA -->
-    <div class="controls">
-      <a class="contact-header-btn cta" href="#contact">Contactez-moi</a>
-      <button id="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">☰</button>
-    </div>
-  </div>
-</header>
+            <nav id="main-nav" class="main-nav" aria-label="Navigation principale">
+                <ul>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    </ul>
+            </nav>
 
+            <div class="controls">
+                <a href="#contact" class="btn contact-header-btn">Contactez-moi</a>
+                <button id="burger" aria-label="Ouvrir le menu" aria-controls="main-nav" aria-expanded="false" title="Menu">☰</button>
+            </div>
+            
+        </div>
+    </header>
 
-
-<!-- Ton hero doit exister si tu gardes la logique on-hero -->
-<section id="hero-aprilford"> … </section>
-
+    <main id="main">
+        <section id="hero-aprilford">
             <div class="container hero-content-inner">
                 <h2 class="title-hero">STOP SEARCHING<br>START DESIGNING.</h2>
                 <p class="subtitle-hero">Développeur web et graphiste à Paris, je conçois des sites performants et élégants alliant design et technologie.</p>
@@ -192,7 +192,3 @@
     <script>AOS.init({ duration: 800, once: true });</script>
 </body>
 </html>
-
-
-
-
