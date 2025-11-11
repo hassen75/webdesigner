@@ -249,7 +249,7 @@ section {
     }
 
 .main-nav {
-    /* Base mobile-first (Masqué par défaut) */
+    /* Base mobile-first */
     position: fixed;
     inset: 0 0 0 0; /* Prend tout l'écran */
     translate: 0 -100%; /* Déplace hors de l'écran */
@@ -258,7 +258,6 @@ section {
     padding-top: 60px;
     text-align: center;
     z-index: 999;
-    display: none; /* Masqué par défaut */
 }
 
     /* Style des liens A à l'intérieur de la navigation mobile */
@@ -277,7 +276,7 @@ section {
         }
 
 /* Règle d'ouverture du menu mobile */
-.site-header.nav-open .main-nav { 
+.site-header.nav-open #main-nav { 
     translate: 0 0; /* Menu descend pour être visible */
     display: block !important; /* Afficher l'overlay */
 }
@@ -786,13 +785,21 @@ footer p {
         margin-left: 0; 
     }
     
-    /* Le bouton Contactez-moi et la navigation desktop sont masqués en mobile */
+    /* Le bouton Contactez-moi est masqué en mobile */
     .contact-header-btn {
         display: none !important; 
     }
-    .main-nav {
-        /* Masqué par défaut. Ne s'affiche qu'avec la classe nav-open */
-        display: none !important; 
+
+    /* ⚠️ NOUVEAU: Masquage de la nav desktop sur mobile */
+    #main-nav {
+        display: none !important;
+        position: fixed;
+        inset: 0 0 0 0; 
+        translate: 0 -100%; 
+        transition: translate .25s ease;
+        background: rgba(0,0,0,.9); 
+        padding-top: 60px;
+        z-index: 999;
     }
 
     /* S'assurer que le bouton burger est visible */
@@ -804,19 +811,8 @@ footer p {
         z-index: 1001 !important; 
     }
     
-    /* Menu Mobile Overlay Styles */
-    .main-nav {
-        position: fixed;
-        inset: 0 0 0 0; 
-        translate: 0 -100%; 
-        transition: translate .25s ease;
-        background: rgba(0,0,0,.9); 
-        padding-top: 60px;
-        z-index: 999;
-    }
-    
-    /* La règle d'ouverture doit être forte pour contrer le display:none */
-    .site-header.nav-open .main-nav { 
+    /* La règle d'ouverture du menu mobile doit fonctionner */
+    .site-header.nav-open #main-nav { 
         translate: 0 0; 
         display: block !important; 
     }
