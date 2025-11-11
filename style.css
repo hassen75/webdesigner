@@ -146,7 +146,7 @@ section {
     border-bottom: 1px solid #ddd; 
 }
 
-/* NOUVEAU: Style pour le logo en texte (PARTIE GRASSE) */
+/* NOUVEAU: Style pour le logo en texte */
 .text-logo {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-bold);
@@ -201,15 +201,15 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap; /* CORRECTION: Assurer que les éléments restent sur une ligne */
+    flex-wrap: wrap;
     min-height: 80px; 
 }
 
 .brand-left {
-    /* CORRECTION: Utiliser baseline pour que les textes s'alignent parfaitement */
-    align-items: baseline; 
+    display: flex;
+    align-items: baseline; /* CORRECTION VERTICALE */
+    width: auto;
     margin-right: 20px;
-    display: flex; /* AJOUTÉ POUR ALIGNER TEXT-LOGO ET DESCRIPTOR */
 }
 
 .controls {
@@ -241,7 +241,7 @@ section {
 }
 
     #theme-toggle:hover, #burger:hover {
-        background: rgba(127,127,127,.12)
+        background: rgba(127,127,127,.05);
     }
 
 .main-nav {
@@ -728,6 +728,17 @@ footer p {
             font-size: 1rem;
             border-radius: 5px;
             color: var(--color-text-dark) !important;
+        }
+
+        /* ⚠️ CORRECTION FINALE : Lien Portfolio en non-gras */
+        .main-nav ul li:nth-child(3) a {
+            font-weight: var(--font-weight-regular) !important; 
+            opacity: 0.9;
+        }
+        
+        /* Assurer que les autres liens sont bien semi-gras */
+        .main-nav ul li:not(:nth-child(3)) a {
+            font-weight: var(--font-weight-semibold) !important; 
         }
 
     .about-grid {
