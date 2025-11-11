@@ -258,8 +258,6 @@ section {
     padding-top: 60px;
     text-align: center;
     z-index: 999;
-    /* NOUVEAU: Assurer que la nav est flex pour être affichée sur desktop */
-    display: none; 
 }
 
     /* Style des liens A à l'intérieur de la navigation mobile */
@@ -545,4 +543,293 @@ button {
 }
 
 /* Styles de focus AprilFord */
-#contact-form input:focus,
+#contact-form input:focus, #contact-form textarea:focus {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+#contact-form textarea {
+    height: 150px;
+    resize: vertical
+}
+
+#form-status {
+    padding: .5rem;
+    text-align: center;
+    font-weight: 600
+}
+
+.social-links {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 1.1rem
+}
+
+.social-links a {
+    color: var(--color-primary-blue);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+}
+
+.social-links a:hover {
+    color: var(--color-secondary-pink);
+    text-decoration: underline;
+}
+
+/* Footer (Light Mode / AprilFord) */
+footer {
+    background-color: var(--color-light-background); 
+    color: var(--color-text-dark); 
+    padding: 2.5rem 1rem; 
+    font-size: .95rem; 
+    border-top: 1px solid #e5e5e5; 
+}
+
+/* Structure interne du footer */
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-copyright {
+    margin: 0;
+    opacity: 0.8;
+    order: 2;
+}
+
+.footer-email {
+    margin: 0;
+    order: 1;
+}
+
+footer p {
+    margin: 0; 
+    text-align: center;
+}
+
+/* ===========================
+   Responsive (Final)
+   =========================== */
+@media (min-width:769px) { /* UTILISER 769px POUR LES STYLES DESKTOP/TABLETTE */
+    #nav-toggle { 
+        display: none !important; /* Masquer le burger sur desktop */
+    }
+
+    /* Le logo image est masqué pour l'usage du logo texte */
+    .logo-hm {
+        display: none !important;
+    }
+    
+    /* Afficher le logo texte sur desktop */
+    .text-logo {
+        display: block !important;
+    }
+
+    /* ⚠️ ÉTAT STICKY / OPAQUE (Quand on DÉFILE) */
+    .site-header {
+        position: sticky !important; 
+        top: 0 !important;
+        width: 100% !important;
+        z-index: 1000 !important;
+        
+        background-color: var(--color-light-background) !important; 
+        border-bottom: 1px solid #ddd; 
+    }
+    
+    /* ⚠️ ÉTAT ON-HERO / TRANSPARENT (Quand en HAUT DE PAGE) */
+    .site-header.on-hero {
+        position: absolute !important; 
+        background: transparent !important; 
+        border-bottom: none !important; 
+    }
+
+    /* TEXTE BLANC DANS L'ÉTAT ON-HERO */
+    .site-header.on-hero .text-logo,
+    .site-header.on-hero .logo-descriptor,
+    .site-header.on-hero .main-nav a { 
+        color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
+    }
+    
+    /* Bouton 'Contactez-moi' reste blanc avec texte sombre, même sur le Hero */
+    .site-header.on-hero .contact-header-btn {
+        background-color: var(--color-text-light) !important; 
+        color: var(--color-text-dark) !important; 
+    }
+
+    /* Les liens redeviennent sombres sur le fond clair du header sticky */
+    .site-header .header-inner * {
+        color: var(--color-text-dark) !important;
+    }
+    
+    /* NOUVELLE RÈGLE : Style pour le descripteur "Portfolio" (PARTIE NON-GRASSE) */
+    .logo-descriptor {
+        font-family: var(--font-heading);
+        font-weight: var(--font-weight-regular); /* Poids normal (400) */
+        font-size: 20px;
+        margin-left: 8px; /* Petite espace après le nom "Hassen Mokdad" */
+        color: var(--color-text-dark) !important; 
+        display: flex;
+        align-items: center;
+        line-height: 1;
+    }
+
+    /* CORRECTION MARGES LOGO (text-logo) */
+    .text-logo {
+        margin: 0 !important;
+        padding: 0 !important;
+        line-height: 1 !important;
+    }
+
+    .header-inner {
+        flex-wrap: nowrap;
+        justify-content: space-between; 
+        align-items: center; /* CORRECTION VERTICALE */
+    }
+
+    .brand-left {
+        /* Correction: Utiliser baseline pour que les textes s'alignent parfaitement */
+        align-items: baseline; 
+        margin-right: 20px; 
+    }
+
+    .tagline {
+        display: none !important; 
+    }
+
+    /* Styles pour la navigation desktop (CENTRAGE) */
+    .main-nav {
+        position: static;
+        display: flex !important; /* Afficher la nav desktop */
+        width: auto;
+        height: auto;
+        padding-top: 0;
+        background: transparent !important;
+        margin-right: auto; 
+        margin-left: auto; 
+    }
+
+        .main-nav a { /* Cible les liens A directement (nouvelle structure HTML) */
+            padding: .5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            color: var(--color-text-dark) !important;
+        }
+
+        /* ⚠️ CORRECTION FINALE : Lien Portfolio en non-gras */
+        .main-nav a:nth-child(3) { 
+            font-weight: var(--font-weight-regular) !important; 
+            opacity: 0.9;
+        }
+        
+        /* Assurer que les autres liens sont bien semi-gras */
+        .main-nav a:not(:nth-child(3)) {
+            font-weight: var(--font-weight-semibold) !important; 
+        }
+
+    .about-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* ===========================
+   Responsive (Correction Mobile Finale)
+   =========================== */
+@media (max-width: 768px) {
+    /* ⚠️ CORRECTION 1: LOGO TEXTE COMPLET (Hassen Mokdad) */
+    .text-logo {
+        display: block !important; 
+        font-size: 16px !important; /* Taille réduite pour mobile */
+        color: var(--color-text-light) !important; 
+    }
+    
+    /* Masquer le descripteur "Portfolio" sur mobile */
+    .logo-descriptor {
+        display: none !important;
+    }
+    
+    /* Masquer le logo image */
+    .logo-hm { 
+        display: none !important;
+    }
+
+    /* ⚠️ CORRECTION 2: ALIGNEMENT ET MASQUAGE */
+    .site-header {
+        position: relative !important; 
+        background: var(--color-text-dark) !important; 
+        padding: 0.8rem 1rem !important; /* Padding réduit pour mobile */
+    }
+    
+    .site-header .header-inner * {
+        color: var(--color-text-light) !important;
+    }
+
+    .header-inner {
+        justify-content: space-between; 
+        align-items: center;
+        flex-wrap: nowrap; 
+        min-height: 50px; /* Hauteur réduite pour mobile */
+    }
+    
+    .controls {
+        display: flex;
+        align-items: center;
+        gap: 8px; /* Réduire l'espace entre le bouton et le burger */
+        margin-left: 0; 
+    }
+    
+    /* Le bouton Contactez-moi et la navigation desktop sont masqués en mobile */
+    .contact-header-btn,
+    .main-nav {
+        display: none !important; 
+    }
+
+    /* S'assurer que le bouton burger est visible */
+    #nav-toggle { /* Cible le bouton burger */
+        display: block !important;
+        color: var(--color-text-light) !important;
+        font-size: 1.3rem !important; 
+        position: relative !important; 
+        z-index: 1001 !important; 
+    }
+    
+    /* Menu Mobile Overlay Styles */
+    .main-nav {
+        position: fixed;
+        inset: 0 0 0 0; 
+        translate: 0 -100%; 
+        transition: translate .25s ease;
+        background: rgba(0,0,0,.9); 
+        padding-top: 60px;
+        z-index: 999;
+    }
+    
+    .site-header.nav-open .main-nav { 
+        translate: 0 0; 
+        display: block !important; /* Afficher l'overlay */
+    }
+
+    /* Footer Responsive */
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .footer-email, .footer-copyright {
+        text-align: center;
+        width: 100%;
+        order: initial; 
+    }
+    .footer-copyright {
+        order: 2; 
+    }
+    .footer-email {
+        order: 1; 
+    }
+}
