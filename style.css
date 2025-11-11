@@ -184,7 +184,7 @@ section {
 /* ⚠️ RÈGLE CRITIQUE POUR LE TEXTE BLANC DANS LE HERO */
 .site-header.on-hero .text-logo,
 .site-header.on-hero .logo-descriptor,
-.site-header.on-hero .main-nav a {
+.site-header.on-hero .main-nav a { 
     color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
 }
 
@@ -249,7 +249,7 @@ section {
     }
 
 .main-nav {
-    /* Base mobile-first */
+    /* Base mobile-first (Masqué par défaut) */
     position: fixed;
     inset: 0 0 0 0; /* Prend tout l'écran */
     translate: 0 -100%; /* Déplace hors de l'écran */
