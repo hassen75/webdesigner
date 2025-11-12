@@ -184,7 +184,7 @@ section {
 /* ⚠️ RÈGLE CRITIQUE POUR LE TEXTE BLANC DANS LE HERO */
 .site-header.on-hero .text-logo,
 .site-header.on-hero .logo-descriptor,
-.site-header.on-hero .main-nav a { 
+.site-header.on-hero #main-nav a { 
     color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
 }
 
@@ -819,7 +819,7 @@ footer p {
     /* La règle d'ouverture du menu mobile doit fonctionner */
     .site-header.nav-open .main-nav { 
         translate: 0 0; 
-        display: block !important; 
+        display: block !important; /* Afficher l'overlay */
     }
 
     /* Footer Responsive */
