@@ -184,7 +184,7 @@ section {
 /* ⚠️ RÈGLE CRITIQUE POUR LE TEXTE BLANC DANS LE HERO */
 .site-header.on-hero .text-logo,
 .site-header.on-hero .logo-descriptor,
-.site-header.on-hero .main-nav a { 
+.site-header.on-hero #main-nav a { 
     color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
 }
 
@@ -258,6 +258,7 @@ section {
     padding-top: 60px;
     text-align: center;
     z-index: 999;
+    display: none; /* Masqué par défaut */
 }
 
     /* Style des liens A à l'intérieur de la navigation mobile */
@@ -654,7 +655,7 @@ footer p {
     /* TEXTE BLANC DANS L'ÉTAT ON-HERO */
     .site-header.on-hero .text-logo,
     .site-header.on-hero .logo-descriptor,
-    .site-header.on-hero .main-nav a { 
+    .site-header.on-hero #main-nav a { 
         color: var(--color-text-light) !important; /* FORCE LE TEXTE BLANC */
     }
     
@@ -763,67 +764,4 @@ footer p {
     /* ⚠️ CORRECTION 2: ALIGNEMENT ET MASQUAGE */
     .site-header {
         position: relative !important; 
-        background: var(--color-text-dark) !important; 
-        padding: 0.8rem 1rem !important; /* Padding réduit pour mobile */
-    }
-    
-    .site-header .header-inner * {
-        color: var(--color-text-light) !important;
-    }
-
-    .header-inner {
-        justify-content: space-between; 
-        align-items: center;
-        flex-wrap: nowrap; 
-        min-height: 50px; /* Hauteur réduite pour mobile */
-    }
-    
-    .controls {
-        display: flex;
-        align-items: center;
-        gap: 8px; /* Réduire l'espace entre le bouton et le burger */
-        margin-left: 0; 
-    }
-    
-    /* Le bouton Contactez-moi est masqué en mobile */
-    .contact-header-btn {
-        display: none !important; 
-    }
-
-    /* S'assurer que le bouton burger est visible */
-    #nav-toggle { /* Cible le bouton burger */
-        display: block !important;
-        color: var(--color-text-light) !important;
-        font-size: 1.3rem !important; 
-        position: relative !important; 
-        z-index: 1001 !important; 
-    }
-    
-    /* Masquer la navigation desktop/overlay */
-    #main-nav {
-        display: none !important; 
-    }
-
-    /* La règle d'ouverture du menu mobile doit fonctionner */
-    .site-header.nav-open #main-nav { 
-        translate: 0 0; 
-        display: block !important; 
-    }
-
-    /* Footer Responsive */
-    .footer-inner {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .footer-email, .footer-copyright {
-        text-align: center;
-        width: 100%;
-        order: initial; 
-    }
-    .footer-copyright {
-        order: 2; 
-    }
-    .footer-email {
-        order: 1; 
-    }
-}
+        background: var(--color-text-
